@@ -4,10 +4,6 @@ import { Iproduct } from "../components/model/model";
 import { getCartTotalAndItemHome } from "../components/model/functionsForCart";
 
 let response: Iproduct[];
-// let currentProduct: Iproduct;
-// let cartTotal: number = 0;
-// let cartItem: number = 0;
-// let cartArr: Iproduct[] = [];
 const API = "https://dummyjson.com/products?limit=100";
 
 const getProducts = async () => {
@@ -31,13 +27,6 @@ export default {
     `;
   },
   afterRender: async () => {
-    // const allCards: NodeListOf<Element> =
-    //   document.querySelectorAll(".home-card");
-    // allCards.forEach((card) => {
-    //   card.addEventListener("click", () => {
-    //     currentProduct = response[+card.id - 1];
-    //   });
-    // });
     getCartTotalAndItemHome();
   },
 };

@@ -1,6 +1,7 @@
 import { PersonalCard } from "../components/ProductCard/PersonalCard/personalCard";
 import { productPatch } from "../components/productPath/productPath";
 import { getCartTotalAndItemProduct } from "../components/model/functionsForCart";
+
 export default {
   render: async () => {
     return `

@@ -10,5 +10,3 @@ const init = () => {
 
 window.addEventListener("load", init);
 
-// const dB = document.querySelectorAll('button');
-// console.log(dB)

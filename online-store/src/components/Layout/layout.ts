@@ -1,4 +1,4 @@
-import { Footer } from '../Footer'
+import { Footer } from '../Footer/Footer'
 import { Header } from '../Header/header'
 
 export const Layout = async (children: Function) => {
