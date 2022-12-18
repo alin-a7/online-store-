@@ -3,7 +3,7 @@ import { response } from "../../pages/Home";
 let currentProduct: Iproduct;
 let cartTotal: number = 0;
 let cartItem: number = 0;
-let cartArr: Iproduct[] = [];
+let cartArr: number[] = [];
 
 export const getCartTotalAndItemHome: () => void = () => {
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
@@ -35,14 +35,14 @@ function changeToCart(
   cartItemEl: HTMLElement,
   addButton: HTMLElement
 ): void {
-  if (!cartArr.includes(currentProduct)) {
-    cartArr.push(currentProduct);
+  if (!cartArr.includes(currentProduct.id)) {
+    cartArr.push(currentProduct.id);
     cartTotal += currentProduct.price;
     cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
     cartItemEl.innerHTML = `Cart(${++cartItem})`;
     addButton.innerHTML = "DROP FROM CART";
   } else {
-    cartArr.splice(cartArr.indexOf(currentProduct), 1);
+    cartArr.splice(cartArr.indexOf(currentProduct.id), 1);
     cartTotal -= currentProduct.price;
     cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
     cartItemEl.innerHTML = `Cart(${--cartItem})`;

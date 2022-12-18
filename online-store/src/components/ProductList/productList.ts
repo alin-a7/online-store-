@@ -1,12 +1,13 @@
 import {Iproduct} from "../model/model"
-import { ProductCard } from '../ProductCard/productCard'
+import { ProductCard, ProductCardMini } from '../ProductCard/productCard'
+import { isCards } from "../model/sortAndSearch"
 
-const renderList: (array: Iproduct[]) => string = (array = []) => {
+export const renderList: (array: Iproduct[]) => string = (array = []) => {
   if (array.length < 1) return ''
 
   let htmlList: string = ``
   array.map((product) => {
-    htmlList += ProductCard(product)
+   isCards? htmlList += ProductCard(product):  htmlList += ProductCardMini(product)
   })
   return htmlList
 }
@@ -14,6 +15,7 @@ const renderList: (array: Iproduct[]) => string = (array = []) => {
 export const ProductList: (array: Iproduct[]) => string = (array = []) => {
     return `
         <div class="card-wrapper">
+          <div class="home-not-found hidden">No products found</div>
             ${renderList(array)}
         </div>
     ` 
