@@ -1,12 +1,12 @@
-import { Layout } from '../components/Layout/layout'
-import  Product  from '../pages/Product'
-import Home  from '../pages/Home'
-import Cart from '../pages/Cart'
+import { layout } from '../components/Layout/layout'
+import  details  from '../pages/Details/details'
+import home  from '../pages/Home/home'
+import cart from '../pages/Cart/cart'
 
 const pages = {
-  home: Home,
-  product: Product,
-  cart: Cart,
+  home: home,
+  details: details,
+  cart: cart,
 }
 
 const getCurrentPage = (route: string) => {
@@ -15,7 +15,7 @@ const getCurrentPage = (route: string) => {
       return pages.home
     }
     case '#product': {
-      return pages.product
+      return pages.details
     }
     case '#cart': {
       return pages.cart
@@ -34,7 +34,7 @@ export const router = async (route: string) => {
 
   const currentPage = getCurrentPage(route) as any
 
-  app.innerHTML = await Layout(await currentPage.render)
+  app.innerHTML = await layout(await currentPage.render)
   await currentPage.afterRender()
 }
 

@@ -1,13 +1,13 @@
-import { PersonalCard } from "../components/ProductCard/PersonalCard/personalCard";
-import { productPatch } from "../components/productPath/productPath";
-import { getCartTotalAndItemProduct } from "../components/model/functionsForCart";
+import { detailsCard } from "../../components/ProductCard/detailsCard/detailsCard";
+import { productPatch } from "../../components/ProductCard/detailsCard/productPath";
+import { getCartTotalAndItemProduct } from "../../components/cartArr/cartArr";
 
 export default {
   render: async () => {
     return `
         <div class="product-wrapper">
           ${productPatch()}
-          ${PersonalCard()}
+          ${detailsCard()}
         </div>
     `;
   },

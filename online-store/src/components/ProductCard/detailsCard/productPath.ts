@@ -1,4 +1,4 @@
-import { currentProduct } from "../model/functionsForCart";
+import { currentProduct } from "../../cartArr/cartArr";
 export const productPatch: () => string = () => {
   return `
   <div class="product-path">

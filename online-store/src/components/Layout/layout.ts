@@ -1,10 +1,10 @@
-import { Footer } from '../Footer/Footer'
-import { Header } from '../Header/header'
+import { header } from '../Header/header'
+import { footer } from "../Footer/footer"
 
-export const Layout = async (children: Function) => {
+export const layout = async (children: Function) => {
     return `
-    ${Header()}
+    ${header()}
         ${await children()}
-    ${Footer()}
+    ${footer()}
     `
 }

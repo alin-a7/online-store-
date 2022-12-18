@@ -1,5 +1,5 @@
-import { Iproduct } from "./model";
-import { response } from "../../pages/Home";
+import { Iproduct } from "../model/model";
+import { response } from "../../pages/Home/home";
 let currentProduct: Iproduct;
 let cartTotal: number = 0;
 let cartItem: number = 0;

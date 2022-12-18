@@ -10,5 +10,4 @@ export interface Iproduct {
         category: string,
         images: string[],
         thumbnail?: string,
-    
 }

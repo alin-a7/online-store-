@@ -1,9 +1,8 @@
-import "../components/ProductList/productList";
-import { ProductList } from "../components/ProductList/productList";
-import { Iproduct } from "../components/model/model";
-import { getCartTotalAndItemHome } from "../components/model/functionsForCart";
-import { searh, sorting } from "../components/model/sortAndSearch";
-import { switchingView } from "../components/model/sortAndSearch";
+import { homeList } from "../../components/ProductList/homeList";
+import { Iproduct } from "../../components/model/model";
+import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
+import { searh, sorting } from "./sortAndSearch";
+import { switchingView } from "./sortAndSearch";
 
 let response: Iproduct[];
 const API = "https://dummyjson.com/products?limit=100";
@@ -40,7 +39,7 @@ export default {
          <img src="./components/assets/list.svg" alt="list" class="home-icon home-icon-list" />
        </div>
      </div>
-     ${ProductList(response)}
+     ${homeList(response)}
        </div>
       </div>
     `;
