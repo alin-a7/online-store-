@@ -1,4 +1,4 @@
-import { currentProduct, cartArr } from "../../model/functionsForCart";
+import { currentProduct, cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
 
 const optionImg: (img: string) => string = (img) => {
@@ -19,7 +19,7 @@ const getOptionImages = (product: Iproduct) => {
   return htmlList;
 };
 
-export const PersonalCard = () => {
+export const detailsCard = () => {
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>
