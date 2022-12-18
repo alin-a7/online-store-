@@ -65,7 +65,7 @@ export const PersonalCard = () => {
       <div class="personal-price">
       ${currentProduct.price}$
       </div>
-      <button class="personal-btn add-cart">${cartArr.includes(currentProduct)? 'DROP FROM CART':'ADD TO CART'}</button>
+      <button class="personal-btn add-cart">${cartArr.includes(currentProduct.id)? 'DROP FROM CART':'ADD TO CART'}</button>
       <button class="personal-btn details">BAY NOW</button>
     </div>  
   </div>
