@@ -7,17 +7,27 @@ let hidddenId: number[] = [];
 let selectValue: string;
 let sortedResponse: Iproduct[];
 let isCards: boolean = true;
+let val: string;
 
 export const searh: () => void = () => {
   const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
-
   const input = document.querySelector(".search-input") as HTMLInputElement;
+  if (val) {
+    input.value = val;
+    makeSearch();
+  }
   input.oninput = () => {
+    val = input.value.trim().toLocaleLowerCase();
+    makeSearch();
+  };
+
+  function makeSearch(): void {
     hidddenId = [];
-    let val: string = input.value.trim().toLocaleLowerCase();
     if (val != "") {
-      arrCards.forEach((card: Element) => {
-        const product = response[+card.id - 1] as Iproduct;
+      arrCards.forEach((card: Element, i: number) => {
+        const product = sortedResponse
+          ? sortedResponse[i]
+          : (response[i] as Iproduct);
         if (
           product.title.toLowerCase().search(val) !== -1 ||
           product.category.toLowerCase().search(val) !== -1 ||
@@ -46,24 +56,27 @@ export const searh: () => void = () => {
     quantity.innerHTML = `Found: ${101 - hidCards.length}`;
 
     getNotFoundPoduct();
-  };
+  }
 };
 
 export const sorting: () => void = () => {
   const sortSelect = document.querySelector(
     ".sort-select"
   ) as HTMLSelectElement;
-  sortedResponse = [...response];
+  if (selectValue) {
+    sortSelect.value = selectValue;
+  }
+  sortedResponse = sortedResponse ? sortedResponse : [...response];
   sortSelect.onchange = () => {
     selectValue = sortSelect.value;
     if (selectValue === "price ASC")
-    sortedResponse= sortedResponse.sort((a, b) => a.price - b.price);
+      sortedResponse = sortedResponse.sort((a, b) => a.price - b.price);
     if (selectValue === "price DESC")
-    sortedResponse = sortedResponse.sort((a, b) => b.price - a.price);
+      sortedResponse = sortedResponse.sort((a, b) => b.price - a.price);
     if (selectValue === "rating ASC")
-    sortedResponse = sortedResponse.sort((a, b) => a.rating - b.rating);
+      sortedResponse = sortedResponse.sort((a, b) => a.rating - b.rating);
     if (selectValue === "rating DESC")
-    sortedResponse = sortedResponse.sort((a, b) => b.rating - a.rating);
+      sortedResponse = sortedResponse.sort((a, b) => b.rating - a.rating);
 
     renderSortCards();
   };
@@ -79,7 +92,7 @@ export const renderSortCards: () => void = () => {
     hidddenId.includes(+card.id) ? card.classList.add("hidden") : card
   );
   getNotFoundPoduct();
-  
+
   getCartTotalAndItemHome();
   searh();
 };
