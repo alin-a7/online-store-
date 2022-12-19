@@ -1,4 +1,4 @@
-import { response } from "./home";
+import { response } from "./Home";
 import { Iproduct } from "../../components/model/model";
 import { renderList } from "../../components/ProductList/homeList";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";

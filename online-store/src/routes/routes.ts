@@ -1,6 +1,6 @@
 import { layout } from '../components/Layout/layout'
 import  details  from '../pages/Details/details'
-import home  from '../pages/Home/home'
+import home  from '../pages/Home/Home'
 import cart from '../pages/Cart/cart'
 
 const pages = {
