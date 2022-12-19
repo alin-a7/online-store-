@@ -1,7 +1,7 @@
-import { response } from "../../pages/Home";
-import { Iproduct } from "./model";
-import { renderList } from "../ProductList/productList";
-import { getCartTotalAndItemHome } from "./functionsForCart";
+import { response } from "./home";
+import { Iproduct } from "../../components/model/model";
+import { renderList } from "../../components/ProductList/homeList";
+import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
 
 let hidddenId: number[] = [];
 let selectValue: string;

@@ -1,6 +1,6 @@
-import { cartItem, cartTotal } from "../model/functionsForCart";
+import { cartItem, cartTotal } from "../cartArr/cartArr";
 
-export const Header = () => {
+export const header = () => {
     return `
     <header>
         <div class="header-wrapper">

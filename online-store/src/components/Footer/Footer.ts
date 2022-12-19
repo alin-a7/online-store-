@@ -1,7 +1,7 @@
 //@ts-ignore
 import styles from './Footer.module.css'
 
-export const Footer = () => {
+export const footer = () => {
   const view: string = `
         <footer>
         <div class="footer">

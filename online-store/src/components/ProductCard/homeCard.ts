@@ -1,6 +1,6 @@
 import { Iproduct } from "../model/model";
-import { cartArr } from "../model/functionsForCart";
-export const ProductCard: (product: Iproduct) => string = (product) => {
+import { cartArr } from "../cartArr/cartArr";
+export const homeCard: (product: Iproduct) => string = (product) => {
   return `
     <div class="home-card home-card-style" id="${product.id}">
     <div class="home-card__title">${product.title}</div>
@@ -30,7 +30,7 @@ export const ProductCard: (product: Iproduct) => string = (product) => {
     `;
 };
 
-export const ProductCardMini: (product: Iproduct) => string = (product) => {
+export const homeCardMini: (product: Iproduct) => string = (product) => {
   return `
   <div class="home-card card-mini" id="${product.id}">
   <img
