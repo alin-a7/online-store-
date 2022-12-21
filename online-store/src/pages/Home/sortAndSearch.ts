@@ -8,12 +8,20 @@ let hidddenId: number[] = [];
 let hidSearchId: number[] = [];
 let hidCategoryId: number[] = [];
 let hidBrandId: number[] = [];
+let hidPricedId: number[] = [];
+let hidStockdId: number[] = [];
 let selectValue: string;
 let sortedResponse: Iproduct[];
 let isCards: boolean = true;
 let val: string;
 let checkedCategoryArr: string[] = [];
 let checkedBrandArr: string[] = [];
+let minPriceValue: number 
+let maxPriceValue: number
+let minStockValue: number 
+let maxStockValue: number
+
+const gap: number = 250;
 
 export const searh: () => void = () => {
   arrCards = document.querySelectorAll(".home-card");
@@ -212,8 +220,7 @@ export const checkboxFilter = () => {
 };
 
 export function hideCards(): void {
-  hidddenId = [...new Set([...hidCategoryId, ...hidSearchId, ...hidBrandId])];
-  console.log(hidddenId);
+  hidddenId = [...new Set([...hidCategoryId, ...hidSearchId, ...hidBrandId, ...hidPricedId, ...hidStockdId])];
 
   arrCards.forEach((card) => {
     hidddenId.includes(+card.id)
@@ -242,5 +249,106 @@ function restoringCheckboxes(): void {
     });
   }
 }
+
+export const rangePriceFilter: () => void = () => {
+  const rangePriceInput: NodeListOf<Element> =
+    document.querySelectorAll(".price-range input");
+  const rangePriceMinInput = document.querySelector(
+    ".price-min"
+  ) as HTMLInputElement;
+  const rangePriceMaxInput = document.querySelector(
+    ".price-max"
+  ) as HTMLInputElement;
+  const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
+  const minValue = document.querySelector(".price-min-value") as HTMLElement;
+  const maxValue = document.querySelector(".price-max-value") as HTMLElement;
+
+  rangePriceMinInput.value = minPriceValue? `${minPriceValue}`: "0"
+  rangePriceMaxInput.value = maxPriceValue? `${maxPriceValue}`: `1749`
+  minValue.innerHTML = `${parseInt(rangePriceMinInput.value)}$`
+  maxValue.innerHTML = `${parseInt(rangePriceMaxInput.value)}$`
+
+  rangePriceInput.forEach((input) => {
+    input.addEventListener("input", (event: Event) => {
+      hidPricedId = [];
+      const rangTarget = event.target as HTMLElement;
+      minPriceValue = parseInt(rangePriceMinInput.value);
+      maxPriceValue = parseInt(rangePriceMaxInput.value);
+      minPriceValue = Math.min(minPriceValue, maxPriceValue);
+      maxPriceValue = Math.max(minPriceValue, maxPriceValue);
+
+      arrCards.forEach((card: Element, i: number) => {
+        const product = sortedResponse
+          ? sortedResponse[i]
+          : (response[i] as Iproduct);
+        if (product.price < minPriceValue || product.price > maxPriceValue) {
+          card.classList.add("hidden");
+        } else {
+          card.classList.remove("hidden");
+        }
+      });
+      arrCards.forEach((card) => {
+        card.classList.contains("hidden")
+          ? hidPricedId.push(+card.id)
+          : hidPricedId;
+      });
+      minValue.innerHTML = `${minPriceValue}$`
+      maxValue.innerHTML = `${maxPriceValue}$`
+  
+      hideCards();
+    });
+  });
+};
+
+export const rangeStockFilter: () => void = () => {
+  const rangeStockInput: NodeListOf<Element> =
+    document.querySelectorAll(".stock-range input");
+  const rangeStockMinInput = document.querySelector(
+    ".stock-min"
+  ) as HTMLInputElement;
+  const rangeStockMaxInput = document.querySelector(
+    ".stock-max"
+  ) as HTMLInputElement;
+  const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
+  const minValue = document.querySelector(".stock-min-value") as HTMLElement;
+  const maxValue = document.querySelector(".stock-max-value") as HTMLElement;
+
+  rangeStockMinInput.value = minStockValue? `${minStockValue}`: "0"
+  rangeStockMaxInput.value = maxStockValue? `${maxStockValue}`: `150`
+  minValue.innerHTML = `${parseInt(rangeStockMinInput.value)}`
+  maxValue.innerHTML = `${parseInt(rangeStockMaxInput.value)}`
+
+  rangeStockInput.forEach((input) => {
+    input.addEventListener("input", (event: Event) => {
+      hidStockdId = [];
+      const rangTarget = event.target as HTMLElement;
+      minStockValue = parseInt(rangeStockMinInput.value);
+      maxStockValue = parseInt(rangeStockMaxInput.value);
+      minStockValue = Math.min(minStockValue, maxStockValue);
+      maxStockValue = Math.max(minStockValue, maxStockValue);
+
+      arrCards.forEach((card: Element, i: number) => {
+        const product = sortedResponse
+          ? sortedResponse[i]
+          : (response[i] as Iproduct);
+        if (product.stock < minStockValue || product.stock > maxStockValue) {
+          card.classList.add("hidden");
+        } else {
+          card.classList.remove("hidden");
+        }
+      });
+      arrCards.forEach((card) => {
+        card.classList.contains("hidden")
+          ? hidStockdId.push(+card.id)
+          : hidStockdId;
+      });
+      minValue.innerHTML = `${minStockValue}`
+      maxValue.innerHTML = `${maxStockValue}`
+  
+      hideCards();
+    });
+  });
+};
+
 
 export { sortedResponse, hidddenId, isCards };

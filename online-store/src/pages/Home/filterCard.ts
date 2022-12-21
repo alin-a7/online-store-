@@ -34,7 +34,7 @@ const filterList: (str: string) => string = (str) => {
   return htmlList
 };
 
-export const filterCard = (str) =>{
+export const filterCard: (str: string) => string = (str) =>{
     return `
     <div class="filter-card">
       <div class="filter__title">${str}</div>

@@ -242,7 +242,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: 1000px;
+  height: 900px;
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -262,8 +262,9 @@ header {
   text-align: center;
   padding: 5px 0;
   font-size: 20px;
+  text-transform: uppercase;
 }
-.filter__item-wrapper{
+.filter__item-wrapper {
   height: 250px;
   overflow-y: scroll;
   display: flex;
@@ -272,14 +273,17 @@ header {
   padding-bottom: 10px;
 }
 
-body::-webkit-scrollbar, .filter__item-wrapper::-webkit-scrollbar {
-  width: 12px; 
+body::-webkit-scrollbar,
+.filter__item-wrapper::-webkit-scrollbar {
+  width: 12px;
 }
-body::-webkit-scrollbar, .filter__item-wrapper::-webkit-scrollbar-track {
+body::-webkit-scrollbar,
+.filter__item-wrapper::-webkit-scrollbar-track {
   background: #4c4c4c;
   border-radius: 20px;
 }
-body::-webkit-scrollbar-thumb, .filter__item-wrapper::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.filter__item-wrapper::-webkit-scrollbar-thumb {
   background-color: white;
   border-radius: 20px;
   border: 3px solid #4c4c4c;
@@ -295,9 +299,52 @@ body::-webkit-scrollbar-thumb, .filter__item-wrapper::-webkit-scrollbar-thumb {
   font-size: 18px;
   display: flex;
 }
-.filter__label:hover{
+.filter__label:hover {
   cursor: pointer;
 }
+
+/* RANGE-фильтр */
+.filter__range-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+.range-value-wrapper{
+  display: flex;
+  justify-content: space-around;
+  font-size: 20px;
+}
+.slider {
+  background: #4c4c4c;
+  height: 6px;
+  width: 95%;
+  border-radius: 10px;
+  margin: 0 auto;
+  z-index: 1;
+}
+.range-slider {
+  position: relative;
+}
+.range-slider input {
+  position: absolute;
+  top: -23px;
+  left: 5px;
+  height: 5px;
+  width: 95%;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  pointer-events: all;
+  background: white;
+}
+
 
 /* Конец глвыной страницы */
 
@@ -428,7 +475,8 @@ body::-webkit-scrollbar-thumb, .filter__item-wrapper::-webkit-scrollbar-thumb {
   max-width: 300px;
 }
 
-.hidden, .hidden-not {
+.hidden,
+.hidden-not {
   display: none;
 }
 .active-icon {

@@ -1,10 +1,9 @@
 import { homeList } from "../../components/ProductList/homeList";
 import { Iproduct } from "../../components/model/model";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
-import { searh, sorting } from "./sortAndSearch";
-import { switchingView, sortedResponse, hideCards } from "./sortAndSearch";
+import { searh, sorting, switchingView, sortedResponse, hideCards, checkboxFilter, rangePriceFilter, rangeStockFilter } from "./sortAndSearch";
 import { filterCard } from "./filterCard";
-import { checkboxFilter } from "./sortAndSearch";
+import { rangeFilterCard } from "./rangeFilterCard";
 
 let response: Iproduct[];
 const API = "https://dummyjson.com/products?limit=100";
@@ -23,6 +22,8 @@ export default {
         <div class="filter">
         ${filterCard("category")}
         ${filterCard("brand")}
+        ${rangeFilterCard('price')}
+        ${rangeFilterCard('stock')}
        </div>
        <div class="sort-card-wrapper">
          <div class="sort-wrapper">
@@ -51,7 +52,9 @@ export default {
     sorting();
     searh();
     checkboxFilter();
-    hideCards()
+    rangePriceFilter();
+    rangeStockFilter();
+    hideCards();
   },
 };
 
