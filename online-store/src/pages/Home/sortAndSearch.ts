@@ -3,14 +3,20 @@ import { Iproduct } from "../../components/model/model";
 import { renderList } from "../../components/ProductList/homeList";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
 
+let arrCards: NodeListOf<Element>;
 let hidddenId: number[] = [];
+let hidSearchId: number[] = [];
+let hidCategoryId: number[] = [];
+let hidBrandId: number[] = [];
 let selectValue: string;
 let sortedResponse: Iproduct[];
 let isCards: boolean = true;
 let val: string;
+let checkedCategoryArr: string[] = [];
+let checkedBrandArr: string[] = [];
 
 export const searh: () => void = () => {
-  const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
+  arrCards = document.querySelectorAll(".home-card");
   const input = document.querySelector(".search-input") as HTMLInputElement;
   if (val) {
     input.value = val;
@@ -22,7 +28,7 @@ export const searh: () => void = () => {
   };
 
   function makeSearch(): void {
-    hidddenId = [];
+    hidSearchId = [];
     if (val != "") {
       arrCards.forEach((card: Element, i: number) => {
         const product = sortedResponse
@@ -48,14 +54,12 @@ export const searh: () => void = () => {
       });
     }
     arrCards.forEach((card) => {
-      card.classList.contains("hidden") ? hidddenId.push(+card.id) : hidddenId;
+      card.classList.contains("hidden")
+        ? hidSearchId.push(+card.id)
+        : hidSearchId;
     });
 
-    const hidCards: NodeListOf<Element> = document.querySelectorAll(".hidden");
-    const quantity = document.querySelector(".quantity") as HTMLElement;
-    quantity.innerHTML = `Found: ${101 - hidCards.length}`;
-
-    getNotFoundPoduct();
+    hideCards();
   }
 };
 
@@ -85,7 +89,7 @@ export const sorting: () => void = () => {
 export const renderSortCards: () => void = () => {
   const cardWrapper = document.querySelector(".card-wrapper") as HTMLElement;
   cardWrapper.innerHTML = `
-  <div class="home-not-found hidden">No products found</div>
+  <div class="home-not-found hidden-not">No products found</div>
   ${renderList(sortedResponse ? sortedResponse : response)}`;
   const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
   arrCards.forEach((card: Element) =>
@@ -100,13 +104,13 @@ export const renderSortCards: () => void = () => {
 function getNotFoundPoduct(): void {
   const homeNotFound = document.querySelector(".home-not-found") as HTMLElement;
   if (hidddenId.length === 100) {
-    homeNotFound.classList.remove("hidden");
+    homeNotFound.classList.remove("hidden-not");
   } else {
-    homeNotFound.classList.add("hidden");
+    homeNotFound.classList.add("hidden-not");
   }
 }
 
-export const switchingView = () => {
+export const switchingView: () => void = () => {
   const iconCards = document.querySelector(".home-icon-cards") as HTMLElement;
   const iconList = document.querySelector(".home-icon-list") as HTMLElement;
   isCards
@@ -127,5 +131,116 @@ export const switchingView = () => {
     renderSortCards();
   });
 };
+
+export const checkboxFilter = () => {
+  restoringCheckboxes();
+  const checkboxes: NodeListOf<Element> = document.querySelectorAll(
+    'input[type="checkbox"]'
+  );
+  arrCards = document.querySelectorAll(".home-card");
+  checkboxes.forEach((item: Element) => {
+    item.addEventListener("click", (event) => {
+      const checkbox = event.target as HTMLInputElement;
+      if (checkbox.checked) {
+        checkbox.classList.contains("category")
+          ? checkedCategoryArr.push(checkbox.value)
+          : checkedBrandArr.push(checkbox.value);
+      } else {
+        checkbox.classList.contains("category")
+          ? checkedCategoryArr.splice(
+              checkedCategoryArr.indexOf(checkbox.value),
+              1
+            )
+          : checkedBrandArr.splice(checkedBrandArr.indexOf(checkbox.value), 1);
+      }
+      if (checkbox.classList.contains("category")) {
+        hidCategoryId = [];
+        if (checkedCategoryArr.length !== 0) {
+          arrCards.forEach((card: Element, i: number) => {
+            const product = sortedResponse
+              ? sortedResponse[i]
+              : (response[i] as Iproduct);
+            if (checkedCategoryArr.includes(product.category)) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        } else {
+          arrCards.forEach((card) => {
+            card.classList.remove("hidden");
+          });
+        }
+
+        arrCards.forEach((card) => {
+          card.classList.contains("hidden")
+            ? hidCategoryId.push(+card.id)
+            : hidCategoryId;
+        });
+
+        hideCards();
+      } else {
+        hidBrandId = [];
+        if (checkedBrandArr.length !== 0) {
+          arrCards.forEach((card: Element, i: number) => {
+            const product = sortedResponse
+              ? sortedResponse[i]
+              : (response[i] as Iproduct);
+            if (checkedBrandArr.includes(product.brand)) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        } else {
+          arrCards.forEach((card) => {
+            card.classList.remove("hidden");
+          });
+        }
+
+        arrCards.forEach((card) => {
+          card.classList.contains("hidden")
+            ? hidBrandId.push(+card.id)
+            : hidBrandId;
+        });
+
+        hideCards();
+      }
+      console.log(checkedBrandArr, checkedCategoryArr);
+    });
+  });
+};
+
+export function hideCards(): void {
+  hidddenId = [...new Set([...hidCategoryId, ...hidSearchId, ...hidBrandId])];
+  console.log(hidddenId);
+
+  arrCards.forEach((card) => {
+    hidddenId.includes(+card.id)
+      ? card.classList.add("hidden")
+      : card.classList.remove("hidden");
+  });
+
+  const hidCards: NodeListOf<Element> = document.querySelectorAll(".hidden");
+  const quantity = document.querySelector(".quantity") as HTMLElement;
+  quantity.innerHTML = `Found: ${100 - hidCards.length}`;
+
+  getNotFoundPoduct();
+}
+
+function restoringCheckboxes(): void {
+  let checkedArr: string[] = [...checkedBrandArr, ...checkedCategoryArr];
+  if (checkedArr.length !== 0) {
+    const checkboxes: NodeListOf<Element> = document.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    checkboxes.forEach((item: Element) => {
+      const checkbox = item as HTMLInputElement;
+      checkedArr.includes(checkbox.value)
+        ? (checkbox.checked = true)
+        : checkbox;
+    });
+  }
+}
 
 export { sortedResponse, hidddenId, isCards };

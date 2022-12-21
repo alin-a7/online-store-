@@ -241,11 +241,62 @@ header {
 .filter {
   display: flex;
   flex-direction: column;
-  height: 550px;
   width: 25%;
+  height: 1000px;
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
+  gap: 15px;
+}
+.filter-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+  border-radius: 5px;
+  border: 1px solid white;
+}
+.filter__title {
+  width: 100%;
+  background: #4c4c4c;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 20px;
+}
+.filter__item-wrapper{
+  height: 250px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 10px;
+}
+
+body::-webkit-scrollbar, .filter__item-wrapper::-webkit-scrollbar {
+  width: 12px; 
+}
+body::-webkit-scrollbar, .filter__item-wrapper::-webkit-scrollbar-track {
+  background: #4c4c4c;
+  border-radius: 20px;
+}
+body::-webkit-scrollbar-thumb, .filter__item-wrapper::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 20px;
+  border: 3px solid #4c4c4c;
+}
+
+.filter__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+}
+.filter__label {
+  font-size: 18px;
+  display: flex;
+}
+.filter__label:hover{
+  cursor: pointer;
 }
 
 /* Конец глвыной страницы */
@@ -377,7 +428,7 @@ header {
   max-width: 300px;
 }
 
-.hidden {
+.hidden, .hidden-not {
   display: none;
 }
 .active-icon {

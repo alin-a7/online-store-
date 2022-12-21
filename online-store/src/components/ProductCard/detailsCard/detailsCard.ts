@@ -11,7 +11,7 @@ const optionImg: (img: string) => string = (img) => {
 `;
 };
 
-const getOptionImages = (product: Iproduct) => {
+const getOptionImages: (product: Iproduct) => string = (product) => {
   let htmlList: string = ``;
   product.images.map((img: string) => {
     htmlList += optionImg(img);
@@ -19,7 +19,7 @@ const getOptionImages = (product: Iproduct) => {
   return htmlList;
 };
 
-export const detailsCard = () => {
+export const detailsCard: () => string = () => {
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>

@@ -2,7 +2,9 @@ import { homeList } from "../../components/ProductList/homeList";
 import { Iproduct } from "../../components/model/model";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
 import { searh, sorting } from "./sortAndSearch";
-import { switchingView, sortedResponse } from "./sortAndSearch";
+import { switchingView, sortedResponse, hideCards } from "./sortAndSearch";
+import { filterCard } from "./filterCard";
+import { checkboxFilter } from "./sortAndSearch";
 
 let response: Iproduct[];
 const API = "https://dummyjson.com/products?limit=100";
@@ -19,9 +21,8 @@ export default {
     return `
       <div class="home-content">
         <div class="filter">
-          <p class=""> 111111111111111111111111111111111111111111 </p>
-          <p class=""> 2 </p>
-          <p class=""> 3 </p>
+        ${filterCard("category")}
+        ${filterCard("brand")}
        </div>
        <div class="sort-card-wrapper">
          <div class="sort-wrapper">
@@ -39,7 +40,7 @@ export default {
          <img src="./components/assets/list.svg" alt="list" class="home-icon home-icon-list" />
        </div>
      </div>
-     ${homeList(sortedResponse? sortedResponse: response)}
+     ${homeList(sortedResponse ? sortedResponse : response)}
        </div>
       </div>
     `;
@@ -49,6 +50,8 @@ export default {
     switchingView();
     sorting();
     searh();
+    checkboxFilter();
+    hideCards()
   },
 };
 
