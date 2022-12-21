@@ -147,7 +147,7 @@ header {
   display: flex;
   gap: 15px;
 }
-.btn {
+.btn, .filter-btn {
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -155,7 +155,7 @@ header {
   color: white;
   width: 100%;
 }
-.btn:hover {
+.btn:hover, .filter-btn:hover {
   cursor: pointer;
   color: #363636;
   background: white;
@@ -238,11 +238,21 @@ header {
 
 /* Фильтр */
 
+.home-buttons{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+}
+.filter-btn{
+  width: 45%;
+  font-size: 18px;
+}
+
 .filter {
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: 900px;
+  height: 960px;
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;

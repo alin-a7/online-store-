@@ -1,7 +1,7 @@
 import { homeList } from "../../components/ProductList/homeList";
 import { Iproduct } from "../../components/model/model";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
-import { searh, sorting, switchingView, sortedResponse, hideCards, checkboxFilter, rangePriceFilter, rangeStockFilter } from "./sortAndSearch";
+import { searh, sorting, switchingView, sortedResponse, hideCards, checkboxFilter, rangePriceFilter, rangeStockFilter, resetFilters } from "./sortAndSearch";
 import { filterCard } from "./filterCard";
 import { rangeFilterCard } from "./rangeFilterCard";
 
@@ -20,6 +20,10 @@ export default {
     return `
       <div class="home-content">
         <div class="filter">
+          <div class="home-buttons">
+            <button class="filter-btn reset">Reset filters</button>
+            <button class="filter-btn">Copy link</button>
+          </div>  
         ${filterCard("category")}
         ${filterCard("brand")}
         ${rangeFilterCard('price')}
@@ -55,6 +59,7 @@ export default {
     rangePriceFilter();
     rangeStockFilter();
     hideCards();
+    resetFilters();
   },
 };
 
