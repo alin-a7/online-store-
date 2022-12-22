@@ -2,6 +2,12 @@ import { response } from "./Home";
 import { Iproduct } from "../../components/model/model";
 import { renderList } from "../../components/ProductList/homeList";
 import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
+import { getCurrentMaxValue, getMinValue } from "./rangeFilterCard";
+import {
+  getMaxQuantityItem,
+  getQuantityItem,
+  getFilterItems,
+} from "./filterCard";
 
 let arrCards: NodeListOf<Element>;
 let hidddenId: number[] = [];
@@ -239,6 +245,11 @@ export function hideCards(): void {
   quantity.innerHTML = `Found: ${100 - hidCards.length}`;
 
   getNotFoundPoduct();
+
+  changesQuantityItem("category");
+  changesQuantityItem("brand");
+  changesRangeItem("price");
+  changesRangeItem("stock");
 }
 
 function restoringCheckboxes(): void {
@@ -415,5 +426,46 @@ export const resetFilters: () => void = () => {
     quantity.innerHTML = `Found: 100`;
   });
 };
+
+export const copyLink = () => {
+  const copyBtn = document.querySelector(".copy") as HTMLElement;
+  copyBtn.addEventListener("click", () => {
+    copyBtn.innerHTML = "Copied!";
+    setTimeout(() => (copyBtn.innerHTML = "Copy link"), 2000);
+  });
+};
+
+function changesQuantityItem(str: string): void {
+  const itemsArr = getFilterItems(str);
+  const filterItems = document.querySelectorAll(`.filter-${str}__quantity`);
+
+  filterItems.forEach((item: Element, i: number) => {
+    const currentItem = item as HTMLElement;
+    currentItem.innerHTML = `(${getQuantityItem(
+      str,
+      itemsArr[i]
+    )}/${getMaxQuantityItem(str, itemsArr[i])})`;
+  });
+}
+
+function changesRangeItem(str: string): void {
+  const rangeMinInput = document.querySelector(
+    `.${str}-min`
+  ) as HTMLInputElement;
+  const rangeMaxInput = document.querySelector(
+    `.${str}-max`
+  ) as HTMLInputElement;
+  const minValue = document.querySelector(`.${str}-min-value`) as HTMLElement;
+  const maxValue = document.querySelector(`.${str}-max-value`) as HTMLElement;
+
+  rangeMinInput.value = `${getMinValue(str)}`;
+  rangeMaxInput.value = `${getCurrentMaxValue(str)}`;
+  minValue.innerHTML = `${getMinValue(str)}${
+    str === "price" && hidddenId.length < 100 ? "$" : ""
+  }`;
+  maxValue.innerHTML = `${getCurrentMaxValue(str)}${
+    str === "price" && hidddenId.length < 100 ? "$" : ""
+  }`;
+}
 
 export { sortedResponse, hidddenId, isCards };

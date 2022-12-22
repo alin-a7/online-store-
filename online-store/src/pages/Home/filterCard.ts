@@ -1,7 +1,8 @@
 import { response } from "./Home";
 import { Iproduct } from "../../components/model/model";
+import { hidddenId } from "./sortAndSearch";
 
-const getFilterItems: (str: string) => string[] = (str) => {
+export const getFilterItems: (str: string) => string[] = (str) => {
   let items: string[] = [];
   response.forEach((product: Iproduct) =>
     !items.includes(product[str]) ? items.push(product[str]) : items
@@ -9,8 +10,11 @@ const getFilterItems: (str: string) => string[] = (str) => {
   return items;
 };
 
-const getQuantityItem: (str: string, item: string) => number = (str, item) => {
+export const getMaxQuantityItem: (str: string, item: string) => number = (str, item) => {
   return response.filter((product: Iproduct) => product[str] === item).length;
+};
+export const getQuantityItem: (str: string, item: string) => number = (str, item) => {
+  return response.filter((product: Iproduct) => product[str] === item && !hidddenId.includes(product.id)).length;
 };
 
 const filterItem: (str: string, item: string) => string = (str, item) => {
@@ -19,7 +23,7 @@ const filterItem: (str: string, item: string) => string = (str, item) => {
       <label class="filter__label">
         <input type="checkbox" class="${str}" value="${item}" /> ${item}
       </label>
-      <div class="filter__quantity">(${getQuantityItem(str,item)}/${getQuantityItem(str, item)})</div>
+      <div class="filter-${str}__quantity">(${getQuantityItem(str,item)}/${getMaxQuantityItem(str, item)})</div>
     </div>
 `;
 };
