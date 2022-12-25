@@ -252,7 +252,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: 960px;
+  height: 980px;
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -306,7 +306,7 @@ body::-webkit-scrollbar-thumb,
   align-items: center;
 }
 .filter__label {
-  font-size: 18px;
+  font-size: 20px;
   display: flex;
 }
 .filter__label:hover {
@@ -323,7 +323,7 @@ body::-webkit-scrollbar-thumb,
 .range-value-wrapper{
   display: flex;
   justify-content: space-around;
-  font-size: 20px;
+  font-size: 25px;
 }
 .slider {
   background: #4c4c4c;

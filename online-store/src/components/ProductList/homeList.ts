@@ -16,7 +16,6 @@ export const homeList: (array: Iproduct[]) => string = (array = []) => {
     return `
         <div class="card-wrapper">
           <div class="home-not-found hidden-not">No products found</div>
-            ${renderList(array)}
         </div>
     ` 
 }

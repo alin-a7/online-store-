@@ -18,7 +18,7 @@ let hidPricedId: number[] = [];
 let hidStockdId: number[] = [];
 let selectValue: string;
 let sortedResponse: Iproduct[];
-let isCards: boolean = true;
+let isCards: boolean;
 let searchVal: string;
 let checkedCategoryArr: string[] = [];
 let checkedBrandArr: string[] = [];
@@ -26,16 +26,27 @@ let minPriceValue: number;
 let maxPriceValue: number;
 let minStockValue: number;
 let maxStockValue: number;
+let params: URLSearchParams = new URLSearchParams(window.location.search);
 
 export const searh: () => void = () => {
   arrCards = document.querySelectorAll(".home-card");
   const input = document.querySelector(".search-input") as HTMLInputElement;
+  params.has("searchVal")
+    ? (searchVal = String(params.get("searchVal")))
+    : (searchVal = "");
+
   if (searchVal) {
     input.value = searchVal;
     makeSearch();
   }
   input.oninput = () => {
     searchVal = input.value.trim().toLocaleLowerCase();
+    params.set("searchVal", `${searchVal}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}`
+    );
     makeSearch();
   };
 
@@ -79,12 +90,25 @@ export const sorting: () => void = () => {
   const sortSelect = document.querySelector(
     ".sort-select"
   ) as HTMLSelectElement;
+  sortedResponse = sortedResponse ? sortedResponse : [...response];
+  params.has("selectValue")
+    ? (selectValue = String(params.get("selectValue")))
+    : (selectValue = "");
   if (selectValue) {
     sortSelect.value = selectValue;
   }
-  sortedResponse = sortedResponse ? sortedResponse : [...response];
+  makeSorting();
   sortSelect.onchange = () => {
     selectValue = sortSelect.value;
+    params.set("selectValue", `${selectValue}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}`
+    );
+    makeSorting();
+  };
+  function makeSorting(): void {
     if (selectValue === "price ASC")
       sortedResponse = sortedResponse.sort((a, b) => a.price - b.price);
     if (selectValue === "price DESC")
@@ -95,7 +119,7 @@ export const sorting: () => void = () => {
       sortedResponse = sortedResponse.sort((a, b) => b.rating - a.rating);
 
     renderSortCards();
-  };
+  }
 };
 
 export const renderSortCards: () => void = () => {
@@ -125,12 +149,24 @@ function getNotFoundPoduct(): void {
 export const switchingView: () => void = () => {
   const iconCards = document.querySelector(".home-icon-cards") as HTMLElement;
   const iconList = document.querySelector(".home-icon-list") as HTMLElement;
+  params.has("isCards")
+    ? (isCards = Boolean(params.get("isCards")))
+    : (isCards = true);
+
   isCards
     ? iconCards.classList.add("active-icon")
     : iconList.classList.add("active-icon");
+  // renderSortCards();
 
   iconCards.addEventListener("click", () => {
     isCards = true;
+    params.set("isCards", "true");
+
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}`
+    );
     iconCards.classList.add("active-icon");
     iconList.classList.remove("active-icon");
     renderSortCards();
@@ -138,6 +174,13 @@ export const switchingView: () => void = () => {
 
   iconList.addEventListener("click", () => {
     isCards = false;
+    params.set("isCards", "");
+
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}`
+    );
     iconList.classList.add("active-icon");
     iconCards.classList.remove("active-icon");
     renderSortCards();
@@ -145,11 +188,22 @@ export const switchingView: () => void = () => {
 };
 
 export const checkboxFilter = () => {
-  restoringCheckboxes();
   const checkboxes: NodeListOf<Element> = document.querySelectorAll(
     'input[type="checkbox"]'
   );
   arrCards = document.querySelectorAll(".home-card");
+
+  params.has("category")
+    ? (checkedCategoryArr = params.getAll("category")[0].split(","))
+    : (checkedCategoryArr = []);
+  params.has("brand")
+    ? (checkedBrandArr = params.getAll("brand")[0].split(","))
+    : (checkedBrandArr = []);
+  console.log(checkedCategoryArr, checkedBrandArr);
+  restoringCheckboxes();
+  filterByCategory();
+  filetrByBrand();
+
   checkboxes.forEach((item: Element) => {
     item.addEventListener("click", (event) => {
       const checkbox = event.target as HTMLInputElement;
@@ -165,62 +219,79 @@ export const checkboxFilter = () => {
             )
           : checkedBrandArr.splice(checkedBrandArr.indexOf(checkbox.value), 1);
       }
+      checkedCategoryArr.length
+        ? params.set("category", `${String(checkedCategoryArr)}`)
+        : params.delete("category");
+      checkedBrandArr.length
+        ? params.set("brand", `${String(checkedBrandArr)}`)
+        : params.delete("brand");
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}`
+      );
+
       if (checkbox.classList.contains("category")) {
-        hidCategoryId = [];
-        if (checkedCategoryArr.length !== 0) {
-          arrCards.forEach((card: Element, i: number) => {
-            const product = sortedResponse
-              ? sortedResponse[i]
-              : (response[i] as Iproduct);
-            if (checkedCategoryArr.includes(product.category)) {
-              card.classList.remove("hidden");
-            } else {
-              card.classList.add("hidden");
-            }
-          });
-        } else {
-          arrCards.forEach((card) => {
-            card.classList.remove("hidden");
-          });
-        }
-
-        arrCards.forEach((card) => {
-          card.classList.contains("hidden")
-            ? hidCategoryId.push(+card.id)
-            : hidCategoryId;
-        });
-
-        hideCards();
+        filterByCategory();
       } else {
-        hidBrandId = [];
-        if (checkedBrandArr.length !== 0) {
-          arrCards.forEach((card: Element, i: number) => {
-            const product = sortedResponse
-              ? sortedResponse[i]
-              : (response[i] as Iproduct);
-            if (checkedBrandArr.includes(product.brand)) {
-              card.classList.remove("hidden");
-            } else {
-              card.classList.add("hidden");
-            }
-          });
-        } else {
-          arrCards.forEach((card) => {
-            card.classList.remove("hidden");
-          });
-        }
-
-        arrCards.forEach((card) => {
-          card.classList.contains("hidden")
-            ? hidBrandId.push(+card.id)
-            : hidBrandId;
-        });
-
-        hideCards();
+        filetrByBrand();
       }
       console.log(checkedBrandArr, checkedCategoryArr);
     });
   });
+
+  function filterByCategory(): void {
+    hidCategoryId = [];
+    if (checkedCategoryArr.length !== 0) {
+      arrCards.forEach((card: Element, i: number) => {
+        const product = sortedResponse
+          ? sortedResponse[i]
+          : (response[i] as Iproduct);
+        if (checkedCategoryArr.includes(product.category)) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    } else {
+      arrCards.forEach((card) => {
+        card.classList.remove("hidden");
+      });
+    }
+
+    arrCards.forEach((card) => {
+      card.classList.contains("hidden")
+        ? hidCategoryId.push(+card.id)
+        : hidCategoryId;
+    });
+    hideCards();
+  }
+  function filetrByBrand(): void {
+    hidBrandId = [];
+    if (checkedBrandArr.length !== 0) {
+      arrCards.forEach((card: Element, i: number) => {
+        const product = sortedResponse
+          ? sortedResponse[i]
+          : (response[i] as Iproduct);
+        if (checkedBrandArr.includes(product.brand)) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    } else {
+      arrCards.forEach((card) => {
+        card.classList.remove("hidden");
+      });
+    }
+
+    arrCards.forEach((card) => {
+      card.classList.contains("hidden")
+        ? hidBrandId.push(+card.id)
+        : hidBrandId;
+    });
+    hideCards();
+  }
 };
 
 export function hideCards(): void {
@@ -277,10 +348,14 @@ export const rangePriceFilter: () => void = () => {
   const minValue = document.querySelector(".price-min-value") as HTMLElement;
   const maxValue = document.querySelector(".price-max-value") as HTMLElement;
 
-  rangePriceMinInput.value = minPriceValue ? `${minPriceValue}` : "0";
-  rangePriceMaxInput.value = maxPriceValue ? `${maxPriceValue}` : `1749`;
-  minValue.innerHTML = `${parseInt(rangePriceMinInput.value)}$`;
-  maxValue.innerHTML = `${parseInt(rangePriceMaxInput.value)}$`;
+  params.has("minprice")
+    ? (minPriceValue = Number(params.get("minprice")))
+    : (minPriceValue = 0);
+  params.has("maxprice")
+    ? (maxPriceValue = Number(params.get("maxprice")))
+    : (maxPriceValue = 1749);
+
+  filterByPrice();
 
   rangePriceInput.forEach((input) => {
     input.addEventListener("change", () => {
@@ -290,29 +365,40 @@ export const rangePriceFilter: () => void = () => {
       minPriceValue = Math.min(minPriceValue, maxPriceValue);
       maxPriceValue = Math.max(minPriceValue, maxPriceValue);
 
-      const arrCards: NodeListOf<Element> =
-        document.querySelectorAll(".home-card");
-      arrCards.forEach((card: Element, i: number) => {
-        const product = sortedResponse
-          ? sortedResponse[i]
-          : (response[i] as Iproduct);
-        if (product.price >= minPriceValue && product.price <= maxPriceValue) {
-          card.classList.remove("hidden");
-        } else {
-          card.classList.add("hidden");
-        }
-      });
-      arrCards.forEach((card) => {
-        card.classList.contains("hidden")
-          ? hidPricedId.push(+card.id)
-          : hidPricedId;
-      });
-      minValue.innerHTML = `${minPriceValue}$`;
-      maxValue.innerHTML = `${maxPriceValue}$`;
-
-      hideCards();
+      params.set("minprice", `${minPriceValue}`);
+      params.set("maxprice", `${maxPriceValue}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}`
+      );
+      filterByPrice();
     });
   });
+
+  function filterByPrice(): void {
+    const arrCards: NodeListOf<Element> =
+      document.querySelectorAll(".home-card");
+    arrCards.forEach((card: Element, i: number) => {
+      const product = sortedResponse
+        ? sortedResponse[i]
+        : (response[i] as Iproduct);
+      if (product.price >= minPriceValue && product.price <= maxPriceValue) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+    arrCards.forEach((card) => {
+      card.classList.contains("hidden")
+        ? hidPricedId.push(+card.id)
+        : hidPricedId;
+    });
+    minValue.innerHTML = `${minPriceValue}$`;
+    maxValue.innerHTML = `${maxPriceValue}$`;
+
+    hideCards();
+  }
 };
 
 export const rangeStockFilter: () => void = () => {
@@ -327,10 +413,13 @@ export const rangeStockFilter: () => void = () => {
   const minValue = document.querySelector(".stock-min-value") as HTMLElement;
   const maxValue = document.querySelector(".stock-max-value") as HTMLElement;
 
-  rangeStockMinInput.value = minStockValue ? `${minStockValue}` : "0";
-  rangeStockMaxInput.value = maxStockValue ? `${maxStockValue}` : `150`;
-  minValue.innerHTML = `${parseInt(rangeStockMinInput.value)}`;
-  maxValue.innerHTML = `${parseInt(rangeStockMaxInput.value)}`;
+  params.has("minstock")
+    ? (minStockValue = Number(params.get("minstock")))
+    : (minStockValue = 0);
+  params.has("maxstock")
+    ? (maxStockValue = Number(params.get("maxstock")))
+    : (maxStockValue = 150);
+  filterByStock();
 
   rangeStockInput.forEach((input) => {
     input.addEventListener("change", () => {
@@ -340,34 +429,52 @@ export const rangeStockFilter: () => void = () => {
       minStockValue = Math.min(minStockValue, maxStockValue);
       maxStockValue = Math.max(minStockValue, maxStockValue);
 
-      const arrCards: NodeListOf<Element> =
-        document.querySelectorAll(".home-card");
-      arrCards.forEach((card: Element, i: number) => {
-        const product = sortedResponse
-          ? sortedResponse[i]
-          : (response[i] as Iproduct);
-        if (product.stock >= minStockValue && product.stock <= maxStockValue) {
-          card.classList.remove("hidden");
-        } else {
-          card.classList.add("hidden");
-        }
-      });
-      arrCards.forEach((card) => {
-        card.classList.contains("hidden")
-          ? hidStockdId.push(+card.id)
-          : hidStockdId;
-      });
-      minValue.innerHTML = `${minStockValue}`;
-      maxValue.innerHTML = `${maxStockValue}`;
+      params.set("minstock", `${minStockValue}`);
+      params.set("maxstock", `${maxStockValue}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}`
+      );
 
-      hideCards();
+      filterByStock();
     });
   });
+
+  function filterByStock(): void {
+    const arrCards: NodeListOf<Element> =
+      document.querySelectorAll(".home-card");
+    arrCards.forEach((card: Element, i: number) => {
+      const product = sortedResponse
+        ? sortedResponse[i]
+        : (response[i] as Iproduct);
+      if (product.stock >= minStockValue && product.stock <= maxStockValue) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+    arrCards.forEach((card) => {
+      card.classList.contains("hidden")
+        ? hidStockdId.push(+card.id)
+        : hidStockdId;
+    });
+    minValue.innerHTML = `${minStockValue}`;
+    maxValue.innerHTML = `${maxStockValue}`;
+
+    hideCards();
+  }
 };
 
 export const resetFilters: () => void = () => {
   const resetBtn = document.querySelector(".reset") as HTMLElement;
   resetBtn.addEventListener("click", () => {
+    params = new URLSearchParams("");
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}`
+    );
     sortedResponse = [...response];
     hidddenId =
       hidBrandId =
@@ -421,6 +528,7 @@ export const resetFilters: () => void = () => {
     maxValueStock.innerHTML = `150`;
 
     renderSortCards();
+    hideCards();
 
     const quantity = document.querySelector(".quantity") as HTMLElement;
     quantity.innerHTML = `Found: 100`;
@@ -430,8 +538,13 @@ export const resetFilters: () => void = () => {
 export const copyLink = () => {
   const copyBtn = document.querySelector(".copy") as HTMLElement;
   copyBtn.addEventListener("click", () => {
-    copyBtn.innerHTML = "Copied!";
-    setTimeout(() => (copyBtn.innerHTML = "Copy link"), 2000);
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        copyBtn.innerHTML = "Copied!";
+        setTimeout(() => (copyBtn.innerHTML = "Copy link"), 2000);
+      })
+      .catch((error) => console.log(error));
   });
 };
 
@@ -449,6 +562,8 @@ function changesQuantityItem(str: string): void {
 }
 
 function changesRangeItem(str: string): void {
+  let min: string;
+  let max: string;
   const rangeMinInput = document.querySelector(
     `.${str}-min`
   ) as HTMLInputElement;
@@ -458,12 +573,19 @@ function changesRangeItem(str: string): void {
   const minValue = document.querySelector(`.${str}-min-value`) as HTMLElement;
   const maxValue = document.querySelector(`.${str}-max-value`) as HTMLElement;
 
-  rangeMinInput.value = `${getMinValue(str)}`;
-  rangeMaxInput.value = `${getCurrentMaxValue(str)}`;
-  minValue.innerHTML = `${getMinValue(str)}${
+  params.has(`min${str}`)
+    ? (min = String(params.get(`min${str}`)))
+    : (min = `${getMinValue(str)}`);
+  params.has(`max${str}`)
+    ? (max = String(params.get(`max${str}`)))
+    : (max = `${getCurrentMaxValue(str)}`);
+
+  rangeMinInput.value = min;
+  rangeMaxInput.value = max;
+  minValue.innerHTML = `${min}${
     str === "price" && hidddenId.length < 100 ? "$" : ""
   }`;
-  maxValue.innerHTML = `${getCurrentMaxValue(str)}${
+  maxValue.innerHTML = `${max}${
     str === "price" && hidddenId.length < 100 ? "$" : ""
   }`;
 }
