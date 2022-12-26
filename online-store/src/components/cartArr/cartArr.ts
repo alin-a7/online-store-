@@ -1,5 +1,6 @@
 import { Iproduct } from "../model/model";
 import { response } from "../../pages/Home/Home";
+import { params } from "../../pages/Home/sortAndSearch";
 let currentProduct: Iproduct;
 let cartTotal: number = 0;
 let cartItem: number = 0;
@@ -16,6 +17,14 @@ export const getCartTotalAndItemHome: () => void = () => {
       const target = event.target as HTMLElement;
       if (target.className.split(" ")[1] === "add-cart") {
         changeToCart(cartTotalEl, cartItemEl, target);
+      }
+      if (target.classList.contains("details")) {
+        params.set("id", `${card.id}`);
+        window.history.replaceState(
+          {},
+          "",
+          `${document.location.pathname}?${params.toString()}`
+        );  
       }
     });
   });

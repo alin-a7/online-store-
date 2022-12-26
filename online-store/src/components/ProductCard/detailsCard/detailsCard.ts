@@ -1,5 +1,8 @@
-import { currentProduct, cartArr } from "../../cartArr/cartArr";
+import { cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
+import { params } from "../../../pages/Home/sortAndSearch";
+
+let currentId: number;
 
 const optionImg: (img: string) => string = (img) => {
   return `
@@ -19,7 +22,8 @@ const getOptionImages: (product: Iproduct) => string = (product) => {
   return htmlList;
 };
 
-export const detailsCard: () => string = () => {
+export const detailsCard = (response: Iproduct[]) => {
+  let currentProduct: Iproduct = getCurrentProduct(response);
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>
@@ -42,7 +46,9 @@ export const detailsCard: () => string = () => {
       </div>
       <div class="personal-info__item">
         <div class="personal-info__title">Discount</div>
-        <div class="personal-info__text">${currentProduct.discountPercentage}</div>
+        <div class="personal-info__text">${
+          currentProduct.discountPercentage
+        }</div>
       </div>
       <div class="personal-info__item">
         <div class="personal-info__title">Raiting</div>
@@ -65,10 +71,17 @@ export const detailsCard: () => string = () => {
       <div class="personal-price">
       ${currentProduct.price}$
       </div>
-      <button class="personal-btn add-cart">${cartArr.includes(currentProduct.id)? 'DROP FROM CART':'ADD TO CART'}</button>
+      <button class="personal-btn add-cart">${
+        cartArr.includes(currentProduct.id) ? "DROP FROM CART" : "ADD TO CART"
+      }</button>
       <button class="personal-btn details">BAY NOW</button>
     </div>  
   </div>
 </div>
   `;
 };
+
+export function getCurrentProduct(response: Iproduct[]):Iproduct {
+  params.has("id") ? (currentId = Number(params.get("id"))) : currentId;
+  return response[currentId-1]
+}

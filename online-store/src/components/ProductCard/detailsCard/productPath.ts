@@ -1,5 +1,8 @@
-import { currentProduct } from "../../cartArr/cartArr";
-export const productPatch: () => string = () => {
+import { getCurrentProduct } from "./detailsCard";
+import { Iproduct } from "../../model/model";
+
+export const productPatch = (response) => {
+  let currentProduct: Iproduct =  getCurrentProduct(response);
   return `
   <div class="product-path">
     <a href="#" class="product-path__item">store</a>

@@ -1,13 +1,17 @@
 import { detailsCard } from "../../components/ProductCard/detailsCard/detailsCard";
 import { productPatch } from "../../components/ProductCard/detailsCard/productPath";
 import { getCartTotalAndItemProduct } from "../../components/cartArr/cartArr";
+import { currentProduct } from "../../components/cartArr/cartArr";
+import { getProducts } from "../Home/Home";
+import { Iproduct } from "../../components/model/model";
 
 export default {
   render: async () => {
+    let response: Iproduct[] = await getProducts();
     return `
         <div class="product-wrapper">
-          ${productPatch()}
-          ${detailsCard()}
+          ${productPatch(response)}
+          ${detailsCard(response)}
         </div>
     `;
   },
@@ -26,6 +30,8 @@ export default {
         console.log(newSrc);
       });
     });
+
+
     getCartTotalAndItemProduct();
   },
 };

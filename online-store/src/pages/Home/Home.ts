@@ -8,7 +8,7 @@ import { rangeFilterCard } from "./rangeFilterCard";
 let response: Iproduct[];
 const API = "https://dummyjson.com/products?limit=100";
 
-const getProducts = async () => {
+export const getProducts = async () => {
   const response = await window.fetch(API).then((res) => res.json());
   return response.products;
 };

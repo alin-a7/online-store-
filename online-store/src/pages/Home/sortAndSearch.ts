@@ -199,7 +199,6 @@ export const checkboxFilter = () => {
   params.has("brand")
     ? (checkedBrandArr = params.getAll("brand")[0].split(","))
     : (checkedBrandArr = []);
-  console.log(checkedCategoryArr, checkedBrandArr);
   restoringCheckboxes();
   filterByCategory();
   filetrByBrand();
@@ -236,7 +235,6 @@ export const checkboxFilter = () => {
       } else {
         filetrByBrand();
       }
-      console.log(checkedBrandArr, checkedCategoryArr);
     });
   });
 
@@ -590,4 +588,4 @@ function changesRangeItem(str: string): void {
   }`;
 }
 
-export { sortedResponse, hidddenId, isCards };
+export { sortedResponse, hidddenId, isCards, params };
