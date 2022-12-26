@@ -4,6 +4,7 @@ export default {
           <div class="cart-wrapper">
           not found
           </div>
+          <div class="popup"></div>
       `;
     },
     afterRender: async () => {

@@ -32,11 +32,20 @@ export const getCartTotalAndItemHome: () => void = () => {
 
 export const getCartTotalAndItemProduct: () => void = () => {
   const addButton = document.querySelector(".add-cart") as HTMLElement;
+  const bayButton = document.querySelector(".bay-now") as HTMLElement;
   const cartTotalEl = document.querySelector(".cart-total") as HTMLElement;
   const cartItemEl = document.querySelector(".cart-item") as HTMLElement;
   addButton.addEventListener("click", () => {
     changeToCart(cartTotalEl, cartItemEl, addButton);
   });
+  bayButton.addEventListener('click', ()=>{
+    if (!cartArr.includes(currentProduct.id)) {
+      cartArr.push(currentProduct.id);
+      cartTotal += currentProduct.price;
+      cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
+      cartItemEl.innerHTML = `Cart(${++cartItem})`;
+    } 
+  })
 };
 
 function changeToCart(

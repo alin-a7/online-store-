@@ -2,11 +2,13 @@ import { layout } from '../components/Layout/layout'
 import  details  from '../pages/Details/details'
 import home  from '../pages/Home/Home'
 import cart from '../pages/Cart/cart'
+import  notFound  from '../pages/notFound'
 
 const pages = {
   home: home,
   details: details,
   cart: cart,
+  notFound: notFound,
 }
 
 const getCurrentPage = (route: string) => {

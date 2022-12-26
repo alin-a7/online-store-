@@ -74,7 +74,9 @@ export const detailsCard = (response: Iproduct[]) => {
       <button class="personal-btn add-cart">${
         cartArr.includes(currentProduct.id) ? "DROP FROM CART" : "ADD TO CART"
       }</button>
-      <button class="personal-btn details">BAY NOW</button>
+      <a href="#cart" class="a-bay">
+        <button class="personal-btn bay-now">BAY NOW</button>
+     </a>
     </div>  
   </div>
 </div>
