@@ -5,6 +5,7 @@ let currentProduct: Iproduct;
 let cartTotal: number = 0;
 let cartItem: number = 0;
 let cartArr: number[] = [];
+let isBay: boolean = false;
 
 export const getCartTotalAndItemHome: () => void = () => {
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
@@ -24,7 +25,7 @@ export const getCartTotalAndItemHome: () => void = () => {
           {},
           "",
           `${document.location.pathname}?${params.toString()}`
-        );  
+        );
       }
     });
   });
@@ -38,14 +39,15 @@ export const getCartTotalAndItemProduct: () => void = () => {
   addButton.addEventListener("click", () => {
     changeToCart(cartTotalEl, cartItemEl, addButton);
   });
-  bayButton.addEventListener('click', ()=>{
+  bayButton.addEventListener("click", () => {
+    isBay = true;
     if (!cartArr.includes(currentProduct.id)) {
       cartArr.push(currentProduct.id);
       cartTotal += currentProduct.price;
       cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
       cartItemEl.innerHTML = `Cart(${++cartItem})`;
-    } 
-  })
+    }
+  });
 };
 
 function changeToCart(
@@ -68,4 +70,11 @@ function changeToCart(
   }
 }
 
-export { currentProduct, cartTotal, cartItem, cartArr };
+export function clickCart() {
+  const cartHeader = document.querySelector(".cart-item") as HTMLElement;
+  cartHeader.addEventListener("click", () => {
+    isBay = false;
+  });
+}
+
+export { currentProduct, cartTotal, cartItem, cartArr, isBay };

@@ -147,7 +147,8 @@ header {
   display: flex;
   gap: 15px;
 }
-.btn, .filter-btn {
+.btn,
+.filter-btn {
   border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -155,7 +156,8 @@ header {
   color: white;
   width: 100%;
 }
-.btn:hover, .filter-btn:hover {
+.btn:hover,
+.filter-btn:hover {
   cursor: pointer;
   color: #363636;
   background: white;
@@ -238,12 +240,12 @@ header {
 
 /* Фильтр */
 
-.home-buttons{
+.home-buttons {
   display: flex;
   justify-content: space-around;
   padding-top: 10px;
 }
-.filter-btn{
+.filter-btn {
   width: 45%;
   font-size: 18px;
 }
@@ -320,7 +322,7 @@ body::-webkit-scrollbar-thumb,
   justify-content: center;
   gap: 40px;
 }
-.range-value-wrapper{
+.range-value-wrapper {
   display: flex;
   justify-content: space-around;
   font-size: 25px;
@@ -354,7 +356,6 @@ input[type="range"]::-webkit-slider-thumb {
   pointer-events: all;
   background: white;
 }
-
 
 /* Конец глвыной страницы */
 
@@ -469,7 +470,7 @@ input[type="range"]::-webkit-slider-thumb {
   color: #363636;
   background: white;
 }
-.a-bay{
+.a-bay {
   width: 100%;
 }
 
@@ -488,9 +489,123 @@ input[type="range"]::-webkit-slider-thumb {
   max-width: 300px;
 }
 
+/* МОДАЛЬНОЕ ОКНО */
+.blackout{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(29, 29, 29);
+  opacity: 0.7;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+
+.popup-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  height: 700px;
+  width: 600px;
+  border: 1px solid white;
+  padding: 25px 20px;
+  border-radius: 5px;
+  background: rgb(47, 65, 52);
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -350px;
+  margin-left: -400px;
+  z-index: 99;
+}
+.popup__title {
+  font-size: 35px;
+}
+.popup-wrapper > input {
+  width: 85%;
+  height: 5%;
+  border: 1px solid white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: rgb(47, 65, 52);
+  font-size: 20px;
+  color: rgb(192, 191, 191);
+  text-align: center;
+}
+.popup-wrapper > input::placeholder {
+  text-align: center;
+  font-size: 20px;
+  color: rgb(192, 191, 191);
+}
+.credit-card__title {
+  font-size: 28px;
+}
+.credit-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  height: 25%;
+  width: 65%;
+  border: 1px solid white;
+  padding: 20px 10px;
+  border-radius: 5px;
+  background: rgb(71, 86, 75);
+  color: white;
+}
+.card-number-wrapper,
+.card-info {
+  display: flex;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.card-icon {
+  width: 50px;
+  height: 25px;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 5px;
+}
+.credit-card-wrapper input {
+  height: 25px;
+  border: 1px solid white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 80%;
+  text-align: center;
+  font-size: 20px;
+  color: rgb(192, 191, 191);
+}
+.credit-card-wrapper input::placeholder {
+  text-align: center;
+  font-size: 20px;
+  color: rgb(192, 191, 191);
+}
+.popup__btn {
+  width: 45%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: rgb(47, 65, 52);
+  color: white;
+  font-size: 20px;
+}
+.popup__btn:hover{
+  color: rgb(47, 65, 52);
+  background: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 /* NOTFOUND */
 
-.not-found{
+.not-found {
   font-size: 50px;
   height: 900px;
   display: flex;

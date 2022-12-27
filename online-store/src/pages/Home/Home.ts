@@ -1,9 +1,10 @@
 import { homeList } from "../../components/ProductList/homeList";
 import { Iproduct } from "../../components/model/model";
-import { getCartTotalAndItemHome } from "../../components/cartArr/cartArr";
+import { getCartTotalAndItemHome, clickCart } from "../../components/cartArr/cartArr";
 import { searh, sorting, switchingView, sortedResponse, hideCards, checkboxFilter, rangePriceFilter, rangeStockFilter, resetFilters, copyLink } from "./sortAndSearch";
 import { filterCard } from "./filterCard";
 import { rangeFilterCard } from "./rangeFilterCard";
+
 
 let response: Iproduct[];
 const API = "https://dummyjson.com/products?limit=100";
@@ -52,6 +53,7 @@ export default {
   },
   afterRender: async () => {
     getCartTotalAndItemHome();
+    clickCart();
     switchingView();
     sorting();
     searh();
