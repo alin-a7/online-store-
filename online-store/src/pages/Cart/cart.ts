@@ -1,5 +1,6 @@
 import { modalWindowCard } from "./modalWindow/modalWindowCard";
 import { windowAppearance } from "./modalWindow/modalWindow";
+import { validation } from "./modalWindow/modalWindow";
 
 export default {
     render: async () => {
@@ -14,6 +15,7 @@ export default {
     },
     afterRender: async () => {
       windowAppearance();
+      validation();
     },
   };
   
