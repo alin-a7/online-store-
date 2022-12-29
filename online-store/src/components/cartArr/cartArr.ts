@@ -84,15 +84,14 @@ export function giveEventListenersToButtonsInCart(){
     card.addEventListener("click", (event: Event) => {
       const target = event.target as HTMLElement;
       const copiesEl = card.querySelector('.copies-number') as HTMLElement;
-      if (target.className.split(" ")[1] === "add-copy") {
-          cartObjArr[index].copies = Number(cartObjArr[index].copies) + 1;
-          copiesEl.innerHTML = `${cartObjArr[index].copies}`;
+      if (target.classList.contains('add-copy')) {
+          cartObjArr[cartArr.indexOf(+card.id)].copies = Number(cartObjArr[cartArr.indexOf(+card.id)].copies) + 1;
+          copiesEl.innerHTML = `${cartObjArr[cartArr.indexOf(+card.id)].copies}`;
           cartTotal += cartObjArr[cartArr.indexOf(+card.id)].price;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
-
       }
       if (target.classList.contains('remove-copy')){
-          if (cartObjArr[index].copies === 1){
+          if (cartObjArr[cartArr.indexOf(+card.id)].copies === 1){
             const copies = cartObjArr[cartArr.indexOf(+card.id)].copies;
               cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
               cartItemEl.innerHTML = `Cart(${--cartItem})`;
@@ -100,11 +99,11 @@ export function giveEventListenersToButtonsInCart(){
             cartObjArr.splice(cartArr.indexOf(+card.id), 1);
             cartArr.splice(cartArr.indexOf(+card.id), 1);
             card.classList.toggle('hidden');
-          } else if (Number(cartObjArr[index].copies) > 1){
-            cartObjArr[index].copies = Number(cartObjArr[index].copies) - 1;
+          } else if (Number(cartObjArr[cartArr.indexOf(+card.id)].copies) > 1){
+            cartObjArr[cartArr.indexOf(+card.id)].copies = Number(cartObjArr[cartArr.indexOf(+card.id)].copies) - 1;
             cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
             cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
-            copiesEl.innerHTML = `${cartObjArr[index].copies}`;
+            copiesEl.innerHTML = `${cartObjArr[cartArr.indexOf(+card.id)].copies}`;
           }
       }
       console.log(cartObjArr);
