@@ -1,6 +1,7 @@
 import { Iproduct } from "../model/model";
 import { response } from "../../pages/Home/Home";
-import { params } from "../../pages/Home/sortAndSearch";
+import { getCurrentProduct } from "../ProductCard/detailsCard/detailsCard";
+import { responseDetails } from "../../pages/Details/details";
 let currentProduct: Iproduct;
 let cartTotal: number = 0;
 let cartItem: number = 0;
@@ -19,14 +20,6 @@ export const getCartTotalAndItemHome: () => void = () => {
       if (target.className.split(" ")[1] === "add-cart") {
         changeToCart(cartTotalEl, cartItemEl, target);
       }
-      if (target.classList.contains("details")) {
-        params.set("id", `${card.id}`);
-        window.history.replaceState(
-          {},
-          "",
-          `${document.location.pathname}?${params.toString()}`
-        );
-      }
     });
   });
 };
@@ -36,6 +29,7 @@ export const getCartTotalAndItemProduct: () => void = () => {
   const bayButton = document.querySelector(".bay-now") as HTMLElement;
   const cartTotalEl = document.querySelector(".cart-total") as HTMLElement;
   const cartItemEl = document.querySelector(".cart-item") as HTMLElement;
+  currentProduct = getCurrentProduct(responseDetails)
   addButton.addEventListener("click", () => {
     changeToCart(cartTotalEl, cartItemEl, addButton);
   });

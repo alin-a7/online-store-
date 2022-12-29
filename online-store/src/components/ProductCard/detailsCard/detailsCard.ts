@@ -74,7 +74,7 @@ export const detailsCard = (response: Iproduct[]) => {
       <button class="personal-btn add-cart">${
         cartArr.includes(currentProduct.id) ? "DROP FROM CART" : "ADD TO CART"
       }</button>
-      <a href="#cart" class="a-bay">
+      <a href="#/cart" class="a-bay">
         <button class="personal-btn bay-now">BAY NOW</button>
      </a>
     </div>  
@@ -84,6 +84,6 @@ export const detailsCard = (response: Iproduct[]) => {
 };
 
 export function getCurrentProduct(response: Iproduct[]):Iproduct {
-  params.has("id") ? (currentId = Number(params.get("id"))) : currentId;
+  currentId = +window.location.hash.split('/')[2] || currentId;
   return response[currentId-1]
 }

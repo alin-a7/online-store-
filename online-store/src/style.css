@@ -615,12 +615,14 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* NOTFOUND */
 
-.not-found {
+.not-found-wrapper {
   font-size: 50px;
   height: 900px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .hidden,

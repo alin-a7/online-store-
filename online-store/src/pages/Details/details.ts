@@ -5,13 +5,15 @@ import { currentProduct } from "../../components/cartArr/cartArr";
 import { getProducts } from "../Home/Home";
 import { Iproduct } from "../../components/model/model";
 
+let responseDetails: Iproduct[]
+
 export default {
   render: async () => {
-    let response: Iproduct[] = await getProducts();
+    responseDetails = await getProducts();
     return `
         <div class="product-wrapper">
-          ${productPatch(response)}
-          ${detailsCard(response)}
+          ${productPatch(responseDetails)}
+          ${detailsCard(responseDetails)}
         </div>
     `;
   },
@@ -35,3 +37,5 @@ export default {
     getCartTotalAndItemProduct();
   },
 };
+
+export { responseDetails };
