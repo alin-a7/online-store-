@@ -1,6 +1,7 @@
 import { cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
 import { params } from "../../../pages/Home/sortAndSearch";
+import { products } from "../../model/const";
 
 let currentId: number;
 
@@ -23,7 +24,7 @@ const getOptionImages: (product: Iproduct) => string = (product) => {
 };
 
 export const detailsCard = (response: Iproduct[]) => {
-  let currentProduct: Iproduct = getCurrentProduct(response);
+  let currentProduct: Iproduct = getCurrentProduct(products);
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>
