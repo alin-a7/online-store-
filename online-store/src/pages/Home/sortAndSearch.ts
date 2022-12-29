@@ -127,7 +127,7 @@ export const renderSortCards: () => void = () => {
   cardWrapper.innerHTML = `
   <div class="home-not-found hidden-not">No products found</div>
   ${renderList(sortedResponse ? sortedResponse : response)}`;
-  const arrCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
+  arrCards = document.querySelectorAll(".home-card");
   arrCards.forEach((card: Element) =>
     hidddenId.includes(+card.id) ? card.classList.add("hidden") : card
   );
@@ -135,6 +135,9 @@ export const renderSortCards: () => void = () => {
 
   getCartTotalAndItemHome();
   searh();
+  // checkboxFilter();
+  // rangePriceFilter();
+  // rangeStockFilter();
 };
 
 function getNotFoundPoduct(): void {
@@ -468,62 +471,22 @@ export const resetFilters: () => void = () => {
   const resetBtn = document.querySelector(".reset") as HTMLElement;
   resetBtn.addEventListener("click", () => {
     params = new URLSearchParams("");
-    window.history.replaceState(
-      {},
-      "",
-      `${document.location.pathname}?${params.toString()}`
-    );
+    window.history.replaceState({}, "", `${document.location.pathname}`);
     sortedResponse = [...response];
-    hidddenId =
-      hidBrandId =
-      hidCategoryId =
-      hidPricedId =
-      hidSearchId =
-      hidStockdId =
-      checkedBrandArr =
-      checkedCategoryArr =
-        [];
+    hidddenId.length =
+      hidBrandId.length =
+      hidCategoryId.length =
+      hidPricedId.length =
+      hidSearchId.length =
+      hidStockdId.length =
+      checkedBrandArr.length =
+      checkedCategoryArr.length =
+        0;
 
     const input = document.querySelector(".search-input") as HTMLInputElement;
     searchVal = "";
     input.value = "";
     restoringCheckboxes();
-
-    const rangePriceMinInput = document.querySelector(
-      ".price-min"
-    ) as HTMLInputElement;
-    const rangePriceMaxInput = document.querySelector(
-      ".price-max"
-    ) as HTMLInputElement;
-    const rangeStockMinInput = document.querySelector(
-      ".stock-min"
-    ) as HTMLInputElement;
-    const rangeStockMaxInput = document.querySelector(
-      ".stock-max"
-    ) as HTMLInputElement;
-    const minValuePrice = document.querySelector(
-      ".price-min-value"
-    ) as HTMLElement;
-    const maxValuePrice = document.querySelector(
-      ".price-max-value"
-    ) as HTMLElement;
-
-    rangePriceMinInput.value = "0";
-    rangePriceMaxInput.value = `1749`;
-    minValuePrice.innerHTML = `0$`;
-    maxValuePrice.innerHTML = `1749$`;
-
-    const minValueStock = document.querySelector(
-      ".stock-min-value"
-    ) as HTMLElement;
-    const maxValueStock = document.querySelector(
-      ".stock-max-value"
-    ) as HTMLElement;
-
-    rangeStockMinInput.value = "0";
-    rangeStockMaxInput.value = `150`;
-    minValueStock.innerHTML = `0`;
-    maxValueStock.innerHTML = `150`;
 
     renderSortCards();
     hideCards();
@@ -571,12 +534,8 @@ function changesRangeItem(str: string): void {
   const minValue = document.querySelector(`.${str}-min-value`) as HTMLElement;
   const maxValue = document.querySelector(`.${str}-max-value`) as HTMLElement;
 
-  params.has(`min${str}`)
-    ? (min = String(params.get(`min${str}`)))
-    : (min = `${getMinValue(str)}`);
-  params.has(`max${str}`)
-    ? (max = String(params.get(`max${str}`)))
-    : (max = `${getCurrentMaxValue(str)}`);
+  min = `${getMinValue(str)}`;
+  max = `${getCurrentMaxValue(str)}`;
 
   rangeMinInput.value = min;
   rangeMaxInput.value = max;

@@ -1,7 +1,7 @@
 import { getCurrentProduct } from "./detailsCard";
 import { Iproduct } from "../../model/model";
 
-export const productPatch = (response) => {
+export const productPatch = (response:Iproduct[]) => {
   let currentProduct: Iproduct =  getCurrentProduct(response);
   return `
   <div class="product-path">

@@ -43,12 +43,8 @@ export const rangeFilterCard: (str: string) => string = (str) => {
   }</div>
         </div>
         <div class="range-slider ${str}-range">
-          <input type="range" min="0" max="${getMaxValue(str)}" step="${
-    getMaxValue(str) / 100
-  }" value="${getMinValue(str)}" class="${str}-min">
-          <input type="range" min="0" max="${getMaxValue(str)}" step="${
-    getMaxValue(str) / 100
-  }" value="${getCurrentMaxValue(str)}" class="${str}-max">
+          <input type="range" min="0" max="${getMaxValue(str)}" value="${getMinValue(str)}" class="${str}-min">
+          <input type="range" min="0" max="${getMaxValue(str)}" value="${getCurrentMaxValue(str)}" class="${str}-max">
         </div>
      </div>
    </div>
