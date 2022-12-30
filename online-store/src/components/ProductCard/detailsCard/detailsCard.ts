@@ -1,6 +1,5 @@
 import { cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
-import { params } from "../../../pages/Home/sortAndSearch";
 import { products } from "../../model/const";
 
 let currentId: number;
@@ -16,15 +15,15 @@ const optionImg: (img: string) => string = (img) => {
 };
 
 const getOptionImages: (product: Iproduct) => string = (product) => {
-  let htmlList: string = ``;
+  let htmlList = ``;
   product.images.map((img: string) => {
     htmlList += optionImg(img);
   });
   return htmlList;
 };
 
-export const detailsCard = (response: Iproduct[]) => {
-  let currentProduct: Iproduct = getCurrentProduct(products);
+export const detailsCard = () => {
+  const currentProduct: Iproduct = getCurrentProduct(products);
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>

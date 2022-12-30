@@ -33,7 +33,7 @@ export default {
        <div class="sort-card-wrapper">
          <div class="sort-wrapper">
          <select name="city" class="sort-select">
-         <option class="option-item" value="">Sorting options:</option>
+         <option class="option-item" value="Sorting options">Sorting options:</option>
          <option class="option-item" value="price ASC">price ASC</option>
          <option class="option-item" value="price DESC">price DESC</option>
          <option class="option-item" value="rating ASC">rating ASC</option>

@@ -7,22 +7,22 @@ export function windowAppearance() {
   });
 }
 
-const regEmail: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
-const regPhone: RegExp = /^((\+)+([0-9]){9,})$/;
+const regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
+const regPhone = /^((\+)+([0-9]){9,})$/;
 
 export function validation() {
   const inputName = document.querySelector(".popup__btn") as HTMLElement;
   const popup = document.querySelector(".popup-wrapper") as HTMLElement;
   enteringOnlyNumbers();
-  validationNameAndAdress("input-name", 2, 3, 0);
-  validationNameAndAdress("input-address", 3, 5, 2);
-  validationEmailAndPhone("input-phone", regPhone, 1);
-  validationEmailAndPhone("input-email", regEmail, 3);
   validationCardValid();
   validationCVV();
   validationCardNumber();
 
   inputName.addEventListener("click", () => {
+    validationNameAndAdress("input-name", 2, 3, 0);
+    validationNameAndAdress("input-address", 3, 5, 2);
+    validationEmailAndPhone("input-phone", regPhone, 1);
+    validationEmailAndPhone("input-email", regEmail, 3);
     if (
       validationNameAndAdress("input-name", 2, 3, 0) &&
       validationNameAndAdress("input-address", 3, 5, 2) &&
@@ -96,8 +96,10 @@ function validationNameAndAdress(
   nameCount = value.split(" ").length;
   nameLength = value.split(" ").filter((x) => x.length >= length).length;
   if (nameCount >= count && nameLength === nameCount) {
+    getNotError(inputName, errorMes);
     return true;
   } else {
+    getError(inputName, errorMes);
     return false;
   }
 }
@@ -114,8 +116,10 @@ function validationEmailAndPhone(str: string, re: RegExp, i: number): boolean {
     }
   };
   if (re.test(input.value.trim())) {
+    getNotError(input, errorMes);
     return true;
   } else {
+    getError(input, errorMes);
     return false;
   }
 }
@@ -161,7 +165,7 @@ function validationCardValid(): boolean {
   const validErr = document.querySelector(`.valid-err`) as HTMLElement;
   let value: string = inputValid.value;
   inputValid.oninput = () => {
-    let intermediateValue = inputValid.value
+    const intermediateValue = inputValid.value
       .split(/(\d{2})/)
       .map((item) => item.replace("/", ""))
       .filter((item) => item !== "");
@@ -207,7 +211,7 @@ function validationCardNumber(): boolean {
   let value: string = inputValid.value;
   inputValid.oninput = () => {
     changeCardLogo(inputValid);
-    let intermediateValue = inputValid.value
+    const intermediateValue = inputValid.value
       .split(/(\d{4})/)
       .map((item) => item.replace(" ", ""))
       .filter((item) => item !== "");

@@ -68,7 +68,8 @@ header {
 }
 .footer-nav:hover {
   text-decoration: underline;
-  color: rgb(91, 110, 91);
+  color: rgb(8, 8, 8);
+  transform: scale(1.1);
 }
 .atr {
   justify-self: flex-end;

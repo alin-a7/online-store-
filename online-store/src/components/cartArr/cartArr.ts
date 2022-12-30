@@ -3,10 +3,10 @@ import { response } from "../../pages/Home/Home";
 import { getCurrentProduct } from "../ProductCard/detailsCard/detailsCard";
 import { responseDetails } from "../../pages/Details/details";
 let currentProduct: Iproduct;
-let cartTotal: number = 0;
-let cartItem: number = 0;
-let cartArr: number[] = [];
-let isBay: boolean = false;
+let cartTotal = 0;
+let cartItem = 0;
+const cartArr: number[] = [];
+let isBay = false;
 
 export const getCartTotalAndItemHome: () => void = () => {
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");

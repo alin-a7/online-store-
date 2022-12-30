@@ -4,28 +4,42 @@ import { Iproduct } from "../../components/model/model";
 
 const getMaxValue: (str: string) => number = (str) => {
   const responseCopy = [...response];
-  return responseCopy.sort((a, b) => b[str] - a[str])[0][str];
+  return responseCopy.sort(
+    (a, b) =>
+      b[`${str === "price" ? "price" : "stock"}`] -
+      a[`${str === "price" ? "price" : "stock"}`]
+  )[0][`${str === "price" ? "price" : "stock"}`];
 };
-export const getCurrentMaxValue: (str: string) => number = (str) => {
+export const getCurrentMaxValue: (str: string) => number | "Not found" = (
+  str
+) => {
   const responseCopy = [...response];
   return responseCopy.filter(
     (product: Iproduct) => !hidddenId.includes(product.id)
   ).length
     ? responseCopy
         .filter((product: Iproduct) => !hidddenId.includes(product.id))
-        .sort((a, b) => b[str] - a[str])[0][str]
-    : 'Not found';
+        .sort(
+          (a, b) =>
+            b[`${str === "price" ? "price" : "stock"}`] -
+            a[`${str === "price" ? "price" : "stock"}`]
+        )[0][`${str === "price" ? "price" : "stock"}`]
+    : "Not found";
 };
 
-export const getMinValue: (str: string) => number = (str) => {
+export const getMinValue: (str: string) => number | "Not found" = (str) => {
   const responseCopy = [...response];
   return responseCopy.filter(
     (product: Iproduct) => !hidddenId.includes(product.id)
   ).length
     ? responseCopy
         .filter((product: Iproduct) => !hidddenId.includes(product.id))
-        .sort((a, b) => a[str] - b[str])[0][str]
-    : 'Not found';
+        .sort(
+          (a, b) =>
+            a[`${str === "price" ? "price" : "stock"}`] -
+            b[`${str === "price" ? "price" : "stock"}`]
+        )[0][`${str === "price" ? "price" : "stock"}`]
+    : "Not found";
 };
 
 export const rangeFilterCard: (str: string) => string = (str) => {
@@ -43,8 +57,12 @@ export const rangeFilterCard: (str: string) => string = (str) => {
   }</div>
         </div>
         <div class="range-slider ${str}-range">
-          <input type="range" min="0" max="${getMaxValue(str)}" value="${getMinValue(str)}" class="${str}-min">
-          <input type="range" min="0" max="${getMaxValue(str)}" value="${getCurrentMaxValue(str)}" class="${str}-max">
+          <input type="range" min="0" max="${getMaxValue(
+            str
+          )}" value="${getMinValue(str)}" class="${str}-min">
+          <input type="range" min="0" max="${getMaxValue(
+            str
+          )}" value="${getCurrentMaxValue(str)}" class="${str}-max">
         </div>
      </div>
    </div>

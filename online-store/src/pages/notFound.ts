@@ -8,7 +8,7 @@ export default {
 `
   },
   afterRender: async ()=>{
-
+// function
   }
  
 }

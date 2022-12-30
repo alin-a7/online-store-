@@ -3,18 +3,18 @@ import { Iproduct } from "../../components/model/model";
 import { hidddenId } from "./sortAndSearch";
 
 export const getFilterItems: (str: string) => string[] = (str) => {
-  let items: string[] = [];
+  const items: string[] = [];
   response.forEach((product: Iproduct) =>
-    !items.includes(product[str]) ? items.push(product[str]) : items
+    !items.includes(product[`${str === 'category'? 'category':'brand'}`]) ? items.push(product[`${str === 'category'? 'category':'brand'}`]) : items
   );
   return items;
 };
 
 export const getMaxQuantityItem: (str: string, item: string) => number = (str, item) => {
-  return response.filter((product: Iproduct) => product[str] === item).length;
+  return response.filter((product: Iproduct) => product[`${str === 'category'? 'category':'brand'}`] === item).length;
 };
 export const getQuantityItem: (str: string, item: string) => number = (str, item) => {
-  return response.filter((product: Iproduct) => product[str] === item && !hidddenId.includes(product.id)).length;
+  return response.filter((product: Iproduct) => product[`${str === 'category'? 'category':'brand'}`] === item && !hidddenId.includes(product.id)).length;
 };
 
 const filterItem: (str: string, item: string) => string = (str, item) => {
@@ -31,7 +31,7 @@ const filterItem: (str: string, item: string) => string = (str, item) => {
 const filterList: (str: string) => string = (str) => {
   const items = getFilterItems(str);
 
-  let htmlList: string = ``;
+  let htmlList = ``;
   items.map((item: string) => {
     htmlList += filterItem(str, item)
   });

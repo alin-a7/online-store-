@@ -135,9 +135,6 @@ export const renderSortCards: () => void = () => {
 
   getCartTotalAndItemHome();
   searh();
-  // checkboxFilter();
-  // rangePriceFilter();
-  // rangeStockFilter();
 };
 
 function getNotFoundPoduct(): void {
@@ -159,7 +156,6 @@ export const switchingView: () => void = () => {
   isCards
     ? iconCards.classList.add("active-icon")
     : iconList.classList.add("active-icon");
-  // renderSortCards();
 
   iconCards.addEventListener("click", () => {
     isCards = true;
@@ -325,7 +321,7 @@ export function hideCards(): void {
 }
 
 function restoringCheckboxes(): void {
-  let checkedArr: string[] = [...checkedBrandArr, ...checkedCategoryArr];
+  const checkedArr: string[] = [...checkedBrandArr, ...checkedCategoryArr];
   const checkboxes: NodeListOf<Element> = document.querySelectorAll(
     'input[type="checkbox"]'
   );
@@ -486,6 +482,10 @@ export const resetFilters: () => void = () => {
     const input = document.querySelector(".search-input") as HTMLInputElement;
     searchVal = "";
     input.value = "";
+    const sortSelect = document.querySelector(
+      ".sort-select"
+    ) as HTMLSelectElement;
+    sortSelect.value = "Sorting options";
     restoringCheckboxes();
 
     renderSortCards();
@@ -523,8 +523,6 @@ function changesQuantityItem(str: string): void {
 }
 
 function changesRangeItem(str: string): void {
-  let min: string;
-  let max: string;
   const rangeMinInput = document.querySelector(
     `.${str}-min`
   ) as HTMLInputElement;
@@ -534,8 +532,8 @@ function changesRangeItem(str: string): void {
   const minValue = document.querySelector(`.${str}-min-value`) as HTMLElement;
   const maxValue = document.querySelector(`.${str}-max-value`) as HTMLElement;
 
-  min = `${getMinValue(str)}`;
-  max = `${getCurrentMaxValue(str)}`;
+  const min = `${getMinValue(str)}`;
+  const max = `${getCurrentMaxValue(str)}`;
 
   rangeMinInput.value = min;
   rangeMaxInput.value = max;

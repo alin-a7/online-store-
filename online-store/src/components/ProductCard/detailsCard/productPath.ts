@@ -2,7 +2,7 @@ import { getCurrentProduct } from "./detailsCard";
 import { Iproduct } from "../../model/model";
 
 export const productPatch = (response:Iproduct[]) => {
-  let currentProduct: Iproduct =  getCurrentProduct(response);
+  const currentProduct: Iproduct =  getCurrentProduct(response);
   return `
   <div class="product-path">
     <a href="#/" class="product-path__item">store</a>
