@@ -1,6 +1,6 @@
 import { Iproduct } from "../model/model";
 import { response } from "../../pages/Home/home";
-import cart from "../../pages/Cart/cart";
+import { updateFilteredCart, pageFiltering } from "../../pages/Cart/cart";
 let currentProduct: Iproduct;
 let cartTotal: number = Number(localStorage.getItem('cartTotal'));
 let cartItem: number = Number(localStorage.getItem('cartItem'));
@@ -99,6 +99,9 @@ export function giveEventListenersToButtonsInCart(){
             cartObjArr.splice(cartArr.indexOf(+card.id), 1);
             cartArr.splice(cartArr.indexOf(+card.id), 1);
             card.classList.toggle('hidden');
+            card.remove();
+            updateFilteredCart();
+            pageFiltering();
           } else if (Number(cartObjArr[cartArr.indexOf(+card.id)].copies) > 1){
             cartObjArr[cartArr.indexOf(+card.id)].copies = Number(cartObjArr[cartArr.indexOf(+card.id)].copies) - 1;
             cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
