@@ -5,8 +5,14 @@ import { cartList } from "../../components/ProductList/cartList";
 import { Iproduct } from "../../components/model/model";
 import { giveEventListenersToButtonsInCart } from "../../components/cartArr/cartArr";
 import { cartItem, cartTotal } from "../../components/cartArr/cartArr";
+import { params } from "../Home/sortAndSearch";
 
 let response: Iproduct[];
+let currentPage: number 
+params.has("curPage")
+? (currentPage = Number(params.get("curPage")))
+: (currentPage = 1);
+
 
 const getProducts = async () => {
   const arr = localStorage.getItem("cartObjArr");
@@ -28,7 +34,7 @@ export default {
           <div class="turn-pages" style="display: flex">
             <div class="cart-btn-wrapper">
               <button class="btn btn-cart prev-page">/<</button>
-              <div id="current-page">1</div>
+              <div id="current-page">${currentPage}</div>
               <button class="btn btn-cart next-page">/></button>
             </div>
           </div>
@@ -37,7 +43,7 @@ export default {
           <div class="filter__range-wrapper">
           <div class="sum-products">Products: ${cartItem}</div>
           <div class="sum-total">Total: ${cartTotal}$</div>
-          <button class="personal-btn bay-now">BAY NOW</button>
+          <button class="personal-btn bay-now cart-bay">BAY NOW</button>
           </div>
        </div>
     
@@ -67,6 +73,9 @@ function pageFiltering() {
   const prodsPerCart = document.querySelector(
     "#prods-per-cart"
   ) as HTMLInputElement;
+  params.has("limit")
+  ? (prodsPerCart.value = String(params.get("limit")))
+  : (prodsPerCart.value = "100");
   let nextPage = document.querySelector(".next-page") as HTMLElement;
   nextPage.parentNode?.replaceChild(nextPage.cloneNode(true), nextPage);
   nextPage = document.querySelector(".next-page") as HTMLElement;
@@ -74,12 +83,22 @@ function pageFiltering() {
   prevPage.parentNode?.replaceChild(prevPage.cloneNode(true), prevPage);
   prevPage = document.querySelector(".prev-page") as HTMLElement;
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
-  let currentPage: number = +currentPageEl.innerHTML;
+  currentPage = +currentPageEl.innerHTML;
   if (currentPage > Math.ceil(allCards.length / +prodsPerCart.value)) {
     currentPage -= 1;
     currentPageEl.innerHTML = `${currentPage}`;
   }
-  prodsPerCart.addEventListener("change", function () {
+  makeCartFilter();
+  prodsPerCart.addEventListener("input", function () {
+    params.set("limit", `${prodsPerCart.value}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}${window.location.hash}`
+    );
+    makeCartFilter();
+  });
+  function makeCartFilter(): void{
     allCards.forEach((card, index) => {
       if (Number(prodsPerCart.value) > 0) {
         if (
@@ -100,11 +119,17 @@ function pageFiltering() {
         console.log(prodsPerCart.value);
       }
     });
-  });
+  }
 
   nextPage.addEventListener("click", function () {
     if (currentPage < Math.ceil(allCards.length / +prodsPerCart.value)) {
       currentPage += 1;
+      params.set("curPage", `${currentPage}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}${window.location.hash}`
+      );  
       currentPageEl.innerHTML = `${currentPage}`;
       allCards.forEach((card, index) => {
         if (Number(prodsPerCart.value) > 0) {
@@ -130,6 +155,12 @@ function pageFiltering() {
   prevPage.addEventListener("click", function () {
     if (currentPage > 1) {
       currentPage -= 1;
+      params.set("curPage", `${currentPage}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}${window.location.hash}`
+      );  
       currentPageEl.innerHTML = `${currentPage}`;
       allCards.forEach((card, index) => {
         if (Number(prodsPerCart.value) > 0) {

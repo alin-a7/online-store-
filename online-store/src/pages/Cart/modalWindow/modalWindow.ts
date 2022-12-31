@@ -39,6 +39,10 @@ export function validation() {
       validationCardNumber()
     ) {
       popup.innerHTML = "Your order has been placed!";
+      localStorage.removeItem("cartObjArr");
+      localStorage.removeItem("cartArr");
+      localStorage.removeItem("cartTotal");
+      localStorage.removeItem("cartItem");
       setTimeout(() => {
         window.location.assign(`${window.location.pathname}`)
       }, 3000);

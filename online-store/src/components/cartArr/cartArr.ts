@@ -113,7 +113,11 @@ export function giveEventListenersToButtonsInCart() {
     card.addEventListener("click", (event: Event) => {
       const target = event.target as HTMLElement;
       const copiesEl = card.querySelector(".copies-number") as HTMLElement;
-      if (target.classList.contains("add-copy")) {
+      if (
+        target.classList.contains("add-copy") &&
+        Number(cartObjArr[cartArr.indexOf(+card.id)].copies) <
+          cartObjArr[cartArr.indexOf(+card.id)].stock
+      ) {
         cartObjArr[cartArr.indexOf(+card.id)].copies =
           Number(cartObjArr[cartArr.indexOf(+card.id)].copies) + 1;
         copiesEl.innerHTML = `${cartObjArr[cartArr.indexOf(+card.id)].copies}`;
