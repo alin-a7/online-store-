@@ -4,7 +4,7 @@ import { cartCard } from '../ProductCard/cartCard'
 export const renderList: (array: Iproduct[]) => string = (array = []) => {
   if (array.length < 1) return ''
 
-  let htmlList: string = ``
+  let htmlList = ``
   array.map((product) => {
     htmlList += cartCard(product)
   })

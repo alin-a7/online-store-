@@ -5,6 +5,12 @@ export function windowAppearance() {
     blackout.classList.add("hidden");
     popup.classList.add("hidden");
   });
+  const bayButton = document.querySelector(".bay-now") as HTMLElement;
+  bayButton.addEventListener('click', ()=>{
+    blackout.classList.remove("hidden");
+    popup.classList.remove("hidden");
+  })
+
 }
 
 const regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;

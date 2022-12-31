@@ -4,8 +4,8 @@ import { getCurrentProduct } from "../ProductCard/detailsCard/detailsCard";
 import { responseDetails } from "../../pages/Details/details";
 import { updateFilteredCart, pageFiltering } from "../../pages/Cart/cart";
 let currentProduct: Iproduct;
-let cartTotal: number = Number(localStorage.getItem("cartTotal"));
-let cartItem: number = Number(localStorage.getItem("cartItem"));
+let cartTotal = Number(localStorage.getItem("cartTotal"));
+let cartItem = Number(localStorage.getItem("cartItem"));
 let isBay = false;
 let cartArr: number[];
 let cartObjArr: Iproduct[];
@@ -49,10 +49,17 @@ export const getCartTotalAndItemProduct: () => void = () => {
   bayButton.addEventListener("click", () => {
     isBay = true;
     if (!cartArr.includes(currentProduct.id)) {
+      cartObjArr.push(currentProduct);
+      cartObjArr[cartObjArr.length - 1].copies = 1;
       cartArr.push(currentProduct.id);
       cartTotal += currentProduct.price;
       cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
       cartItemEl.innerHTML = `Cart(${++cartItem})`;
+
+      localStorage.setItem("cartObjArr", JSON.stringify(cartObjArr));
+      localStorage.setItem("cartArr", JSON.stringify(cartArr));
+      localStorage.setItem("cartTotal", `${cartTotal}`);
+      localStorage.setItem("cartItem", `${cartItem}`);
     }
   });
 };
@@ -97,8 +104,12 @@ export function clickCart() {
 export function giveEventListenersToButtonsInCart() {
   const cartItemEl = document.querySelector(".cart-item") as HTMLElement;
   const cartTotalEl = document.querySelector(".cart-total") as HTMLElement;
+  const sumTotalEl = document.querySelector(".sum-total") as HTMLElement;
+  const sumItemEl = document.querySelector(".sum-products") as HTMLElement;
+  const notProducts = document.querySelector(".cart-not-found") as HTMLElement;
+  const cartContent = document.querySelector(".home-content") as HTMLElement;
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
-  allCards.forEach((card, index) => {
+  allCards.forEach((card) => {
     card.addEventListener("click", (event: Event) => {
       const target = event.target as HTMLElement;
       const copiesEl = card.querySelector(".copies-number") as HTMLElement;
@@ -108,6 +119,7 @@ export function giveEventListenersToButtonsInCart() {
         copiesEl.innerHTML = `${cartObjArr[cartArr.indexOf(+card.id)].copies}`;
         cartTotal += cartObjArr[cartArr.indexOf(+card.id)].price;
         cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
+        sumTotalEl.innerHTML = `Total: ${cartTotal}$`;
       }
       if (target.classList.contains("remove-copy")) {
         if (cartObjArr[cartArr.indexOf(+card.id)].copies === 1) {
@@ -115,8 +127,14 @@ export function giveEventListenersToButtonsInCart() {
           cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
           cartItemEl.innerHTML = `Cart(${--cartItem})`;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
+          sumItemEl.innerHTML = `Products: ${cartItem}`;
+          sumTotalEl.innerHTML = `Total: ${cartTotal}$`;
           cartObjArr.splice(cartArr.indexOf(+card.id), 1);
           cartArr.splice(cartArr.indexOf(+card.id), 1);
+          if (!cartArr.length) {
+            notProducts.classList.toggle("hidden-not");
+            cartContent.classList.toggle("hidden");
+          }
           card.classList.toggle("hidden");
           card.remove();
           updateFilteredCart();
@@ -126,6 +144,7 @@ export function giveEventListenersToButtonsInCart() {
             Number(cartObjArr[cartArr.indexOf(+card.id)].copies) - 1;
           cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
+          sumTotalEl.innerHTML = `Total: ${cartTotal}$`;
           copiesEl.innerHTML = `${
             cartObjArr[cartArr.indexOf(+card.id)].copies
           }`;

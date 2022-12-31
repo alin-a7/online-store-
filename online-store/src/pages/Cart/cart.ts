@@ -4,9 +4,9 @@ import { validation } from "./modalWindow/modalWindow";
 import { cartList } from "../../components/ProductList/cartList";
 import { Iproduct } from "../../components/model/model";
 import { giveEventListenersToButtonsInCart } from "../../components/cartArr/cartArr";
+import { cartItem, cartTotal } from "../../components/cartArr/cartArr";
 
 let response: Iproduct[];
-const API = "https://dummyjson.com/products?limit=100";
 
 const getProducts = async () => {
   const arr = localStorage.getItem("cartObjArr");
@@ -21,14 +21,26 @@ export default {
     response = await getProducts();
 
     return `
-      <div class="home-content">
+      <div class="cart-not-found ${response.length? 'hidden-not':''}">Cart is empty</div>
+      <div class="home-content ${response.length? '':'hidden'}">
         <div class="filter">
-          <input id="prods-per-cart" type="number" min="1" value="100"></number>
+          <input id="prods-per-cart" type="number" min="1" value="100" class="cart-input"></number>
           <div class="turn-pages" style="display: flex">
-            <button class="btn prev-page">/<</button>
-            <div id="current-page">1</div>
-            <button class="btn next-page">/></button>
+            <div class="cart-btn-wrapper">
+              <button class="btn btn-cart prev-page">/<</button>
+              <div id="current-page">1</div>
+              <button class="btn btn-cart next-page">/></button>
+            </div>
           </div>
+          <div class="filter-card">
+          <div class="filter__title">Summary</div>
+          <div class="filter__range-wrapper">
+          <div class="sum-products">Products: ${cartItem}</div>
+          <div class="sum-total">Total: ${cartTotal}$</div>
+          <button class="personal-btn bay-now">BAY NOW</button>
+          </div>
+       </div>
+    
         </div>
         <div class="sort-card-wrapper">
           ${cartList(response)}
