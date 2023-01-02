@@ -1,5 +1,8 @@
-import { currentProduct, cartArr } from "../../cartArr/cartArr";
+import { cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
+import { products } from "../../model/const";
+
+let currentId: number;
 
 const optionImg: (img: string) => string = (img) => {
   return `
@@ -11,8 +14,8 @@ const optionImg: (img: string) => string = (img) => {
 `;
 };
 
-const getOptionImages = (product: Iproduct) => {
-  let htmlList: string = ``;
+const getOptionImages: (product: Iproduct) => string = (product) => {
+  let htmlList = ``;
   product.images.map((img: string) => {
     htmlList += optionImg(img);
   });
@@ -20,6 +23,7 @@ const getOptionImages = (product: Iproduct) => {
 };
 
 export const detailsCard = () => {
+  const currentProduct: Iproduct = getCurrentProduct(products);
   return `
   <div class="personal-card">
   <div class="personal-card__title">${currentProduct.title}</div>
@@ -42,7 +46,9 @@ export const detailsCard = () => {
       </div>
       <div class="personal-info__item">
         <div class="personal-info__title">Discount</div>
-        <div class="personal-info__text">${currentProduct.discountPercentage}</div>
+        <div class="personal-info__text">${
+          currentProduct.discountPercentage
+        }</div>
       </div>
       <div class="personal-info__item">
         <div class="personal-info__title">Raiting</div>
@@ -65,10 +71,19 @@ export const detailsCard = () => {
       <div class="personal-price">
       ${currentProduct.price}$
       </div>
-      <button class="personal-btn add-cart">${cartArr.includes(currentProduct.id)? 'DROP FROM CART':'ADD TO CART'}</button>
-      <button class="personal-btn details">BAY NOW</button>
+      <button class="personal-btn add-cart">${
+        cartArr.includes(currentProduct.id) ? "DROP FROM CART" : "ADD TO CART"
+      }</button>
+      <a href="#/cart" class="a-bay">
+        <button class="personal-btn bay-now">BAY NOW</button>
+     </a>
     </div>  
   </div>
 </div>
   `;
 };
+
+export function getCurrentProduct(response: Iproduct[]):Iproduct {
+  currentId = +window.location.hash.split('/')[2] || currentId;
+  return response[currentId-1]
+}

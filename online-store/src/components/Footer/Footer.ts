@@ -1,8 +1,5 @@
-//@ts-ignore
-import styles from './Footer.module.css'
-
 export const footer = () => {
-  const view: string = `
+  return `
         <footer>
         <div class="footer">
         <div class="footer-container">
@@ -21,5 +18,4 @@ export const footer = () => {
       </div>
         </footer>
     `
-  return view
 }
