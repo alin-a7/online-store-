@@ -34,7 +34,7 @@ export default {
           <div class="turn-pages" style="display: flex">
             <div class="cart-btn-wrapper">
               <button class="btn btn-cart prev-page">/<</button>
-              <div id="current-page">${currentPage}</div>
+              <div id="current-page">1</div>
               <button class="btn btn-cart next-page">/></button>
             </div>
           </div>
@@ -46,7 +46,6 @@ export default {
           <button class="personal-btn bay-now cart-bay">BAY NOW</button>
           </div>
        </div>
-    
         </div>
         <div class="sort-card-wrapper">
           ${cartList(response)}
@@ -76,6 +75,7 @@ function pageFiltering() {
   params.has("limit")
   ? (prodsPerCart.value = String(params.get("limit")))
   : (prodsPerCart.value = "100");
+  let prodsPerCartValue: number = +prodsPerCart.value
   let nextPage = document.querySelector(".next-page") as HTMLElement;
   nextPage.parentNode?.replaceChild(nextPage.cloneNode(true), nextPage);
   nextPage = document.querySelector(".next-page") as HTMLElement;
@@ -83,28 +83,60 @@ function pageFiltering() {
   prevPage.parentNode?.replaceChild(prevPage.cloneNode(true), prevPage);
   prevPage = document.querySelector(".prev-page") as HTMLElement;
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
-  currentPage = +currentPageEl.innerHTML;
+  console.log(allCards)
+  params.has("curPage")
+? (currentPage = Number(params.get("curPage")))
+: (currentPage = 1);
+  currentPageEl.innerHTML = `${currentPage}`;
   if (currentPage > Math.ceil(allCards.length / +prodsPerCart.value)) {
     currentPage -= 1;
     currentPageEl.innerHTML = `${currentPage}`;
   }
   makeCartFilter();
   prodsPerCart.addEventListener("input", function () {
-    params.set("limit", `${prodsPerCart.value}`);
+    prodsPerCartValue = +prodsPerCart.value
+    params.set("limit", `${prodsPerCartValue}`);
     window.history.replaceState(
       {},
       "",
       `${document.location.pathname}?${params.toString()}${window.location.hash}`
     );
+    if(prodsPerCart.value === ''){
+      prodsPerCartValue = allCards.length
+      currentPage = 1;
+      currentPageEl.innerHTML = `${currentPage}`;
+      allCards.forEach((card) => {
+        card.classList.remove('hidden')
+      });
+      params.set("curPage", `${currentPage}`);
+      params.set("limit", `${prodsPerCartValue}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}${window.location.hash}`
+      );  
+    }
+    if(prodsPerCartValue*currentPage > allCards.length){
+      currentPage = Math.ceil(allCards.length/prodsPerCartValue) || 1
+      currentPageEl.innerHTML = `${currentPage}`;
+      params.set("curPage", `${currentPage}`);
+      params.set("limit", `${prodsPerCartValue}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${document.location.pathname}?${params.toString()}${window.location.hash}`
+      );  
+      makeCartFilter();
+    }
     makeCartFilter();
   });
   function makeCartFilter(): void{
     allCards.forEach((card, index) => {
-      if (Number(prodsPerCart.value) > 0) {
+      if (Number(prodsPerCartValue) > 0) {
         if (
           !(
-            index >= Number(prodsPerCart.value) * (currentPage - 1) &&
-            index < Number(prodsPerCart.value) * currentPage
+            index >= Number(prodsPerCartValue) * (currentPage - 1) &&
+            index < Number(prodsPerCartValue) * currentPage
           )
         ) {
           if (!card.classList.contains("hidden")) {
@@ -116,13 +148,13 @@ function pageFiltering() {
           }
         }
       } else {
-        console.log(prodsPerCart.value);
+        console.log(prodsPerCartValue);
       }
     });
   }
 
   nextPage.addEventListener("click", function () {
-    if (currentPage < Math.ceil(allCards.length / +prodsPerCart.value)) {
+    if (currentPage < Math.ceil(allCards.length / +prodsPerCartValue)) {
       currentPage += 1;
       params.set("curPage", `${currentPage}`);
       window.history.replaceState(
@@ -132,11 +164,11 @@ function pageFiltering() {
       );  
       currentPageEl.innerHTML = `${currentPage}`;
       allCards.forEach((card, index) => {
-        if (Number(prodsPerCart.value) > 0) {
+        if (Number(prodsPerCartValue) > 0) {
           if (
             !(
-              index >= Number(prodsPerCart.value) * (currentPage - 1) &&
-              index < Number(prodsPerCart.value) * currentPage
+              index >= Number(prodsPerCartValue) * (currentPage - 1) &&
+              index < Number(prodsPerCartValue) * currentPage
             )
           ) {
             if (!card.classList.contains("hidden")) {
@@ -163,11 +195,11 @@ function pageFiltering() {
       );  
       currentPageEl.innerHTML = `${currentPage}`;
       allCards.forEach((card, index) => {
-        if (Number(prodsPerCart.value) > 0) {
+        if (Number(prodsPerCartValue) > 0) {
           if (
             !(
-              index >= Number(prodsPerCart.value) * (currentPage - 1) &&
-              index < Number(prodsPerCart.value) * currentPage
+              index >= Number(prodsPerCartValue) * (currentPage - 1) &&
+              index < Number(prodsPerCartValue) * currentPage
             )
           ) {
             if (!card.classList.contains("hidden")) {
@@ -191,12 +223,16 @@ function updateFilteredCart() {
   ) as HTMLInputElement;
   const prodsPerCart: number = +prodsPerCartEl.value;
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
+  const allCardsItems: NodeListOf<Element> = document.querySelectorAll(".current-item");
   const currentPageEl = document.querySelector("#current-page") as HTMLElement;
   let currentPage: number = +currentPageEl.innerHTML;
   if (currentPage > Math.ceil(allCards.length / prodsPerCart)) {
     currentPage -= 1;
     currentPageEl.innerHTML = `${currentPage}`;
   }
+  allCardsItems.forEach((item, index)=>{
+    item.innerHTML=`${index+1}`
+  })
   allCards.forEach((card, index) => {
     if (prodsPerCart > 0) {
       if (

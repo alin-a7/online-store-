@@ -124,6 +124,9 @@ export function giveEventListenersToButtonsInCart() {
         cartTotal += cartObjArr[cartArr.indexOf(+card.id)].price;
         cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
         sumTotalEl.innerHTML = `Total: ${cartTotal}$`;
+
+        cartItemEl.innerHTML = `Cart(${++cartItem})`;
+        sumItemEl.innerHTML = `Products: ${cartItem}$`;
       }
       if (target.classList.contains("remove-copy")) {
         if (cartObjArr[cartArr.indexOf(+card.id)].copies === 1) {
@@ -149,6 +152,8 @@ export function giveEventListenersToButtonsInCart() {
           cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
           sumTotalEl.innerHTML = `Total: ${cartTotal}$`;
+          cartItemEl.innerHTML = `Cart(${--cartItem})`;
+          sumItemEl.innerHTML = `Products: ${cartItem}$`;  
           copiesEl.innerHTML = `${
             cartObjArr[cartArr.indexOf(+card.id)].copies
           }`;
