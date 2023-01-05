@@ -2,7 +2,7 @@ import { Iproduct } from "../model/model";
 import { response } from "../../pages/Home/Home";
 import { getCurrentProduct } from "../ProductCard/detailsCard/detailsCard";
 import { responseDetails } from "../../pages/Details/details";
-import { updateFilteredCart, pageFiltering } from "../../pages/Cart/cart";
+import { updateFilteredCart, pageFiltering, updateSumWithDiscount } from "../../pages/Cart/cart";
 let currentProduct: Iproduct;
 let cartTotal = Number(localStorage.getItem("cartTotal"));
 let cartItem = Number(localStorage.getItem("cartItem"));
@@ -164,6 +164,7 @@ export function giveEventListenersToButtonsInCart() {
       localStorage.setItem("cartArr", JSON.stringify(cartArr));
       localStorage.setItem("cartTotal", `${cartTotal}`);
       localStorage.setItem("cartItem", `${cartItem}`);
+      updateSumWithDiscount();
     });
   });
 }
