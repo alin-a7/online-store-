@@ -168,4 +168,8 @@ export function giveEventListenersToButtonsInCart() {
   });
 }
 
+export function sum(a:number, b:number):number{
+  return a+b
+}
+
 export { currentProduct, cartTotal, cartItem, cartArr, isBay, cartObjArr };
