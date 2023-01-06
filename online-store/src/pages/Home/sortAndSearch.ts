@@ -292,15 +292,22 @@ export const checkboxFilter = () => {
 };
 
 export function hideCards(): void {
-  hidddenId = [
-    ...new Set([
-      ...hidCategoryId,
-      ...hidSearchId,
-      ...hidBrandId,
-      ...hidPricedId,
-      ...hidStockdId,
-    ]),
-  ];
+  // hidddenId = [
+  //   ...new Set([
+  //     ...hidCategoryId,
+  //     ...hidSearchId,
+  //     ...hidBrandId,
+  //     ...hidPricedId,
+  //     ...hidStockdId,
+  //   ]),
+  // ];
+  hidddenId = getUniqArr(
+    hidCategoryId,
+    hidSearchId,
+    hidBrandId,
+    hidPricedId,
+    hidStockdId
+  );
 
   arrCards.forEach((card) => {
     hidddenId.includes(+card.id)
@@ -318,6 +325,15 @@ export function hideCards(): void {
   changesQuantityItem("brand");
   changesRangeItem("price");
   changesRangeItem("stock");
+}
+export function getUniqArr(
+  arr1: number[],
+  arr2: number[],
+  arr3: number[],
+  arr4: number[],
+  arr5: number[]
+): number[] {
+  return [...new Set([...arr1, ...arr2, ...arr3, ...arr4, ...arr5])];
 }
 
 function restoringCheckboxes(): void {
@@ -469,15 +485,23 @@ export const resetFilters: () => void = () => {
     params = new URLSearchParams("");
     window.history.replaceState({}, "", `${document.location.pathname}`);
     sortedResponse = [...response];
-    hidddenId.length =
-      hidBrandId.length =
-      hidCategoryId.length =
-      hidPricedId.length =
-      hidSearchId.length =
-      hidStockdId.length =
-      checkedBrandArr.length =
-      checkedCategoryArr.length =
-        0;
+    clearArray(hidddenId)
+    clearArray(hidBrandId)
+    clearArray(hidCategoryId)
+    clearArray(hidPricedId)
+    clearArray(hidSearchId)
+    clearArray(hidStockdId)
+    clearArray(checkedBrandArr)
+    clearArray(checkedCategoryArr)
+    // hidddenId.length =
+    //   hidBrandId.length =
+    //   hidCategoryId.length =
+    //   hidPricedId.length =
+    //   hidSearchId.length =
+    //   hidStockdId.length =
+    //   checkedBrandArr.length =
+    //   checkedCategoryArr.length =
+    //     0;
 
     const input = document.querySelector(".search-input") as HTMLInputElement;
     searchVal = "";
@@ -495,6 +519,9 @@ export const resetFilters: () => void = () => {
     quantity.innerHTML = `Found: 100`;
   });
 };
+export function clearArray(arr:number[] | string[]): number{
+  return arr.length = 0
+}
 
 export const copyLink = () => {
   const copyBtn = document.querySelector(".copy") as HTMLElement;

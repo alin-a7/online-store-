@@ -6,14 +6,14 @@ import { Iproduct } from "../../components/model/model";
 import { giveEventListenersToButtonsInCart } from "../../components/cartArr/cartArr";
 import { cartItem, cartTotal } from "../../components/cartArr/cartArr";
 import { params } from "../Home/sortAndSearch";
-import { promocodes } from "./promocodes/promocodes";
+import { promocodes, Promocode } from "./promocodes/promocodes";
 
 let response: Iproduct[];
 let currentPage: number 
 params.has("curPage")
 ? (currentPage = Number(params.get("curPage")))
 : (currentPage = 1);
-let totalDiscount: number = 0;
+let totalDiscount = 0;
 
 
 const getProducts = async () => {
@@ -23,6 +23,9 @@ const getProducts = async () => {
   }
   return JSON.parse(arr);
 };
+export function getDiscountTotal(cartTotal: number, totalDiscount:number): number{
+  return Math.ceil(cartTotal * (1 - totalDiscount))
+}
 
 export default {
   render: async () => {
@@ -45,9 +48,9 @@ export default {
           <div class="filter__range-wrapper">
           <div class="sum-products">Products: ${cartItem}</div>
           <div class="sum-total" id="sum-without-discount">Total: ${cartTotal}$</div>
-          <div class="sum-total hidden" id="sum-with-discount">Total: ${cartTotal * (1 - totalDiscount)}$</div>
-          <input id="input-promo" val="" type="text"></input>
-          <div class="hidden" id="found-promo"></div>
+          <div class="sum-total hidden" id="sum-with-discount">Total: ${getDiscountTotal(cartTotal, totalDiscount)}$</div>
+          <input id="input-promo" class="promo-input" val="" type="text"></input>
+          <div class="hidden promocode" id="found-promo"></div>
           <button class="personal-btn bay-now cart-bay">BAY NOW</button>
           <div style="text-align: center; margin-bottom: 5px" id="promocodes-for-dummies">Some promocodes are:<br>${Object.keys(promocodes)}</div>
           </div>
@@ -275,23 +278,23 @@ function inputPromoAddEvent(){
       foundPromoEl.id = currentPromo;
       foundPromoEl.classList.remove('hidden');
       inputPromo.after(foundPromoEl);
-      foundPromoEl.innerHTML = `${currentPromo} - ${+promocodes[currentPromo as keyof Object] * 100}%
-      <button class="drop-promo">add</button>`;
+      foundPromoEl.innerHTML = `${currentPromo} - ${+promocodes[currentPromo as keyof Promocode] * 100}%
+      <button class="drop-promo btn btn-promo">add</button>`;
       foundPromoEl.lastChild?.addEventListener('click', function(){
         if (listOfAddedPromos.length === 0){
           totalSumEl.setAttribute('style', 'text-decoration: line-through');
           promoSumEl.classList.remove('hidden');
         }
-        totalDiscount += +promocodes[currentPromo as keyof Object];
-        promoSumEl.innerHTML = `Total: ${Math.ceil(cartTotal * (1 - totalDiscount))}$`;
+        totalDiscount += +promocodes[currentPromo as keyof Promocode];
+        promoSumEl.innerHTML = `Total: ${getDiscountTotal(cartTotal, totalDiscount)}$`;
         listOfAddedPromos.push(currentPromo);
-        foundPromoEl.innerHTML = `${currentPromo} - ${+promocodes[currentPromo as keyof Object] * 100}%
-      <button class="drop-promo">remove</button>`;
+        foundPromoEl.innerHTML = `${currentPromo} - ${+promocodes[currentPromo as keyof Promocode] * 100}%
+      <button class="drop-promo btn btn-promo">remove</button>`;
         const addedPromoEl = foundPromoEl.cloneNode(true) as HTMLElement;
         inputPromo.before(addedPromoEl);
         foundPromoEl.remove();
         addedPromoEl.lastChild?.addEventListener('click', function(){
-          totalDiscount -= +promocodes[currentPromo as keyof Object];
+          totalDiscount -= +promocodes[currentPromo as keyof Promocode];
           listOfAddedPromos = listOfAddedPromos.filter((el) => el !== currentPromo);
           addedPromoEl.remove();
           updateSumWithDiscount();
@@ -307,7 +310,7 @@ function inputPromoAddEvent(){
 
 function updateSumWithDiscount(){
   const promoSumEl = document.getElementById('sum-with-discount') as HTMLElement;
-  promoSumEl.innerHTML = `Total: ${Math.ceil(cartTotal * (1 - totalDiscount))}$`;
+  promoSumEl.innerHTML = `Total: ${getDiscountTotal(cartTotal, totalDiscount)}$`;
 }
 
 export { updateFilteredCart, pageFiltering, updateSumWithDiscount };

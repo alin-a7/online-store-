@@ -81,7 +81,7 @@ function changeToCart(
     const copies = cartObjArr[cartArr.indexOf(currentProduct.id)]?.copies;
     if (copies !== undefined) {
       cartTotal -= currentProduct.price * copies;
-      cartItemEl.innerHTML = `Cart(${--cartItem})`;
+      cartItemEl.innerHTML = `Cart(${cartItem-=copies})`;
     }
     cartObjArr.splice(cartArr.indexOf(currentProduct.id), 1);
     cartArr.splice(cartArr.indexOf(currentProduct.id), 1);
@@ -130,7 +130,7 @@ export function giveEventListenersToButtonsInCart() {
       }
       if (target.classList.contains("remove-copy")) {
         if (cartObjArr[cartArr.indexOf(+card.id)].copies === 1) {
-          const copies = cartObjArr[cartArr.indexOf(+card.id)].copies;
+          // const copies = cartObjArr[cartArr.indexOf(+card.id)].copies;
           cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
           cartItemEl.innerHTML = `Cart(${--cartItem})`;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;
@@ -167,6 +167,10 @@ export function giveEventListenersToButtonsInCart() {
       updateSumWithDiscount();
     });
   });
+}
+
+export function sum(a:number, b:number):number{
+  return a+b
 }
 
 export { currentProduct, cartTotal, cartItem, cartArr, isBay, cartObjArr };

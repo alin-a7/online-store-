@@ -21,7 +21,7 @@ export const homeCard: (product: Iproduct) => string = (product) => {
       </div>
     </div>
     <div class="button-wrapper">
-      <button class="btn add-cart">${cartArr.includes(product.id)? 'DROP FROM CART':'ADD TO CART'}</button>
+      <button class="btn add-cart">${getButtonText(cartArr, product.id)}</button>
       <a href="#/product/${product.id}" >
         <button class="btn details">DETAILS</button>
      </a>
@@ -41,7 +41,7 @@ export const homeCardMini: (product: Iproduct) => string = (product) => {
   <div class="card-mini__content">
     <div class="card-mini__title">${product.title}</div>
     <div class="mini-button-wrapper">
-      <button class="btn add-cart">${cartArr.includes(product.id)? 'DROP FROM CART':'ADD TO CART'}</button>
+      <button class="btn add-cart">${getButtonText(cartArr, product.id)}</button>
       <a href="#/product/${product.id}">
         <button class="btn details">DETAILS</button>
       </a>
@@ -50,6 +50,10 @@ export const homeCardMini: (product: Iproduct) => string = (product) => {
 </div>
 `;
 };
+
+export function getButtonText(arr: number[], id: number){
+  return arr.includes(id)? 'DROP FROM CART':'ADD TO CART'
+}
 
 
 

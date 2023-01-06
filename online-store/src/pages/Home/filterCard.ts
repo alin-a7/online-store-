@@ -1,6 +1,7 @@
 import { response } from "./Home";
 import { Iproduct } from "../../components/model/model";
 import { hidddenId } from "./sortAndSearch";
+import { products } from "../../components/model/const";
 
 export const getFilterItems: (str: string) => string[] = (str) => {
   const items: string[] = [];
@@ -11,7 +12,7 @@ export const getFilterItems: (str: string) => string[] = (str) => {
 };
 
 export const getMaxQuantityItem: (str: string, item: string) => number = (str, item) => {
-  return response.filter((product: Iproduct) => product[`${str === 'category'? 'category':'brand'}`] === item).length;
+  return products.filter((product: Iproduct) => product[`${str === 'category'? 'category':'brand'}`] === item).length;
 };
 export const getQuantityItem: (str: string, item: string) => number = (str, item) => {
   return response.filter((product: Iproduct) => product[`${str === 'category'? 'category':'brand'}`] === item && !hidddenId.includes(product.id)).length;

@@ -25,12 +25,14 @@ export const router = async (route: string) => {
   const currentPage: Pages =
     id > 100
       ? notFound
-      : pages[
-          `${route[0] === "/" ? "" : "/"}${
-            id ? route.split("/").splice(0, 2).join("/") : route
-          }`
-        ] || notFound;
+      : pages[getPage(route)] || notFound;
 
   app.innerHTML = await layout(await currentPage.render);
   await currentPage.afterRender();
 };
+
+export function getPage(str:string): string{
+  return `${str[0] === "/" ? "" : "/"}${
+    +str.split("/")[2] ? str.split("/").splice(0, 2).join("/") : str
+  }`
+}
