@@ -75,15 +75,16 @@ function validationNameAndAdress(
   let nameLength: number;
 
   inputName.oninput = () => {
-    value = inputName.value
-      .split(" ")
-      .map((x) =>
-        x
-          .split("")
-          .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
-          .join("")
-      )
-      .join(" ");
+    // value = inputName.value
+    //   .split(" ")
+    //   .map((x) =>
+    //     x
+    //       .split("")
+    //       .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
+    //       .join("")
+    //   )
+    //   .join(" ");
+    value = upperCaseFirstLetter(inputName.value)
     inputName.value = value;
     nameCount = value.split(" ").length;
     nameLength = value.split(" ").filter((x) => x.length >= length).length;
@@ -93,15 +94,16 @@ function validationNameAndAdress(
       getError(inputName, errorMes);
     }
   };
-  value = inputName.value
-    .split(" ")
-    .map((x) =>
-      x
-        .split("")
-        .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
-        .join("")
-    )
-    .join(" ");
+  // value = inputName.value
+  //   .split(" ")
+  //   .map((x) =>
+  //     x
+  //       .split("")
+  //       .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
+  //       .join("")
+  //   )
+  //   .join(" ");
+  value = upperCaseFirstLetter(inputName.value)
   inputName.value = value;
   nameCount = value.split(" ").length;
   nameLength = value.split(" ").filter((x) => x.length >= length).length;
@@ -112,6 +114,16 @@ function validationNameAndAdress(
     getError(inputName, errorMes);
     return false;
   }
+}
+export function upperCaseFirstLetter(str:string){
+  return str.split(" ")
+  .map((x) =>
+    x
+      .split("")
+      .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
+      .join("")
+  )
+  .join(" ");
 }
 
 function validationEmailAndPhone(str: string, re: RegExp, i: number): boolean {
@@ -189,6 +201,14 @@ function validationCardValid(): boolean {
       getCardError(inputValid, validErr);
     }
   };
+  return checkCardValid(value)
+  // if (+value.split("/")[0] <= 12 && +value.split("/")[1] >= 22) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
+}
+export function checkCardValid(value:string):boolean{
   if (+value.split("/")[0] <= 12 && +value.split("/")[1] >= 22) {
     return true;
   } else {
@@ -206,7 +226,15 @@ function validationCVV(): boolean {
       getCardError(inputCVV, cvvErr);
     }
   };
-  if (inputCVV.value.length === 3) {
+  // if (inputCVV.value.length === 3 || cvv?.length) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
+  return checkCVV(inputCVV.value);
+}
+export function checkCVV(value:string):boolean{
+  if (value.length === 3) {
     return true;
   } else {
     return false;
@@ -235,12 +263,21 @@ function validationCardNumber(): boolean {
       getCardError(inputValid, numberErr);
     }
   };
-  if (value.length === 19) {
+  return checkCardNumber(value)
+  // if (value.length === 19) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
+}
+export function checkCardNumber(value:string):boolean{
+  if (value.split(' ').join('').length === 16) {
     return true;
   } else {
     return false;
   }
 }
+
 
 function changeCardLogo(input: HTMLInputElement): void {
   const logo = document.querySelector(".card-icon") as HTMLImageElement;

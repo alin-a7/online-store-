@@ -213,7 +213,7 @@ header {
 }
 .sort-select,
 .search-input,
-.cart-input {
+.cart-input, .promo-input {
   font-size: 20px;
   border-radius: 5px;
   border: 1px solid white;
@@ -643,7 +643,7 @@ input[type="range"]::-webkit-slider-thumb {
   gap: 15px;
   font-size: 24px;
 }
-.cart-input {
+.cart-input, .promo-input {
   border: 1px solid #4c4c4c;
   color: #4c4c4c;
   background: white;
@@ -732,6 +732,14 @@ text-decoration: underline;
 .hidden,
 .hidden-not {
   display: none;
+}
+.promocode{
+  font-size: 25px;
+  text-align: center;
+}
+.btn-promo{
+  width: 22%;
+  font-size: 16px;
 }
 
 

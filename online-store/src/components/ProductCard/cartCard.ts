@@ -56,14 +56,3 @@ export const cartCard: (product: Iproduct, index:number) => string = (product, i
   </div>
     `;
 };
-
-
-
-// <div class="info-wrapper">
-// <img
-//   class="home-card__img"
-//   src="${product.images[0]}
-// "
-//   alt=""
-// />
-// </div>

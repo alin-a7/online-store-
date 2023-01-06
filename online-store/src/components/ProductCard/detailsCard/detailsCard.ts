@@ -1,6 +1,7 @@
 import { cartArr } from "../../cartArr/cartArr";
 import { Iproduct } from "../../model/model";
 import { products } from "../../model/const";
+import { getButtonText } from "../homeCard";
 
 let currentId: number;
 
@@ -71,9 +72,7 @@ export const detailsCard = () => {
       <div class="personal-price">
       ${currentProduct.price}$
       </div>
-      <button class="personal-btn add-cart">${
-        cartArr.includes(currentProduct.id) ? "DROP FROM CART" : "ADD TO CART"
-      }</button>
+      <button class="personal-btn add-cart">${getButtonText(cartArr, currentProduct.id)}</button>
       <a href="#/cart" class="a-bay">
         <button class="personal-btn bay-now">BAY NOW</button>
      </a>
