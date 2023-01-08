@@ -93,13 +93,14 @@ function pageFiltering() {
   prevPage.parentNode?.replaceChild(prevPage.cloneNode(true), prevPage);
   prevPage = document.querySelector(".prev-page") as HTMLElement;
   const allCards: NodeListOf<Element> = document.querySelectorAll(".home-card");
-  console.log(allCards)
+  // console.log(allCards)
   params.has("curPage")
 ? (currentPage = Number(params.get("curPage")))
 : (currentPage = 1);
   currentPageEl.innerHTML = `${currentPage}`;
   if (currentPage > Math.ceil(allCards.length / +prodsPerCart.value)) {
-    currentPage -= 1;
+    // currentPage -= 1;
+    currentPage = Math.ceil(allCards.length/ +prodsPerCart.value) || 1
     currentPageEl.innerHTML = `${currentPage}`;
   }
   makeCartFilter();
@@ -192,7 +193,6 @@ function pageFiltering() {
         }
       });
     }
-    console.log(currentPage);
   });
   prevPage.addEventListener("click", function () {
     if (currentPage > 1) {
@@ -238,6 +238,12 @@ function updateFilteredCart() {
   let currentPage: number = +currentPageEl.innerHTML;
   if (currentPage > Math.ceil(allCards.length / prodsPerCart)) {
     currentPage -= 1;
+    params.set("curPage", `${currentPage}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${document.location.pathname}?${params.toString()}${window.location.hash}`
+    );  
     currentPageEl.innerHTML = `${currentPage}`;
   }
   allCardsItems.forEach((item, index)=>{
