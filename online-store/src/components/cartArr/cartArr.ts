@@ -70,6 +70,7 @@ function changeToCart(
   addButton: HTMLElement
 ): void {
   if (!cartArr.includes(currentProduct.id)) {
+    console.log(currentProduct instanceof Iproduct);
     cartObjArr.push(currentProduct);
     cartObjArr[cartObjArr.length - 1].copies = 1;
     cartArr.push(currentProduct.id);

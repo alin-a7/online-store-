@@ -1,5 +1,5 @@
 import { Iproduct } from "./model"
-export const products: Iproduct[] =
+export const products: Array<Iproduct> =
 [
     {
         "id": 1,
@@ -1824,4 +1824,5 @@ export const products: Iproduct[] =
             "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
         ]
     }
-]
+].map((el) => new Iproduct(el.id, el.title, el.description, el.price, el.discountPercentage,
+        el.rating, el.stock, el.brand, el.category, el.images, el.thumbnail));
