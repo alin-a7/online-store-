@@ -11,12 +11,14 @@ const API = "https://dummyjson.com/products?limit=100";
 
 export const getProducts = async () => {
   const response = await window.fetch(API).then((res) => res.json());
-  return response.products;
+  console.log(response);
+  return response.products as Iproduct[];
 };
 
 export default {
   render: async () => {
-    response = await getProducts();
+    response = (await getProducts()).map(el => new Iproduct(el.id, el.title, el.description, el.price,
+      el.discountPercentage, el.rating, el.stock, el.brand, el.category, el.images, el.thumbnail));
 
     return `
       <div class="home-content">
@@ -63,6 +65,7 @@ export default {
     hideCards();
     resetFilters();
     copyLink();
+    console.log('render complete');
   },
 };
 
