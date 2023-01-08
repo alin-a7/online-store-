@@ -83,6 +83,12 @@ header {
   align-items: center;
   justify-content: center;
 }
+.footer-author{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 17px;
+}
 
 /* Главная страница */
 .home-content {

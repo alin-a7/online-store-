@@ -10,9 +10,11 @@ export const footer = () => {
             >Курс «JavaScript/Front-end»</a
           >
         </div>
-        <a href="https://github.com/alin-a7" class="footer-nav atr"
-          >Designer: alin-a7</a
-        >
+        <div class="footer-author">
+          <div>Designers:</div>
+          <a href="https://github.com/alin-a7" class="footer-nav atr">alin-a7</a>
+          <a href="https://github.com/JaLongin" class="footer-nav atr">JaLongin</a>
+        </div>
         </div>
         
       </div>

@@ -493,15 +493,6 @@ export const resetFilters: () => void = () => {
     clearArray(hidStockdId)
     clearArray(checkedBrandArr)
     clearArray(checkedCategoryArr)
-    // hidddenId.length =
-    //   hidBrandId.length =
-    //   hidCategoryId.length =
-    //   hidPricedId.length =
-    //   hidSearchId.length =
-    //   hidStockdId.length =
-    //   checkedBrandArr.length =
-    //   checkedCategoryArr.length =
-    //     0;
 
     const input = document.querySelector(".search-input") as HTMLInputElement;
     searchVal = "";
@@ -519,7 +510,11 @@ export const resetFilters: () => void = () => {
     quantity.innerHTML = `Found: 100`;
   });
 };
-export function clearArray(arr:number[] | string[]): number{
+
+interface Lengthwise {
+  length: number;
+}
+export function clearArray<T extends Lengthwise>(arr:T): number{
   return arr.length = 0
 }
 
