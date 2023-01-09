@@ -131,7 +131,6 @@ export function giveEventListenersToButtonsInCart() {
       }
       if (target.classList.contains("remove-copy")) {
         if (cartObjArr[cartArr.indexOf(+card.id)].copies === 1) {
-          // const copies = cartObjArr[cartArr.indexOf(+card.id)].copies;
           cartTotal -= cartObjArr[cartArr.indexOf(+card.id)].price;
           cartItemEl.innerHTML = `Cart(${--cartItem})`;
           cartTotalEl.innerHTML = `Cart-total: ${cartTotal}$`;

@@ -75,15 +75,6 @@ function validationNameAndAdress(
   let nameLength: number;
 
   inputName.oninput = () => {
-    // value = inputName.value
-    //   .split(" ")
-    //   .map((x) =>
-    //     x
-    //       .split("")
-    //       .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
-    //       .join("")
-    //   )
-    //   .join(" ");
     value = upperCaseFirstLetter(inputName.value)
     inputName.value = value;
     nameCount = value.split(" ").length;
@@ -94,15 +85,6 @@ function validationNameAndAdress(
       getError(inputName, errorMes);
     }
   };
-  // value = inputName.value
-  //   .split(" ")
-  //   .map((x) =>
-  //     x
-  //       .split("")
-  //       .map((z, i) => (i === 0 ? (z = z.toLocaleUpperCase()) : z))
-  //       .join("")
-  //   )
-  //   .join(" ");
   value = upperCaseFirstLetter(inputName.value)
   inputName.value = value;
   nameCount = value.split(" ").length;
@@ -202,11 +184,6 @@ function validationCardValid(): boolean {
     }
   };
   return checkCardValid(value)
-  // if (+value.split("/")[0] <= 12 && +value.split("/")[1] >= 22) {
-  //   return true;
-  // } else {
-  //   return false;
-  // }
 }
 export function checkCardValid(value:string):boolean{
   if (+value.split("/")[0] <= 12 && +value.split("/")[1] >= 22) {
@@ -226,11 +203,6 @@ function validationCVV(): boolean {
       getCardError(inputCVV, cvvErr);
     }
   };
-  // if (inputCVV.value.length === 3 || cvv?.length) {
-  //   return true;
-  // } else {
-  //   return false;
-  // }
   return checkCVV(inputCVV.value);
 }
 export function checkCVV(value:string):boolean{
@@ -264,11 +236,6 @@ function validationCardNumber(): boolean {
     }
   };
   return checkCardNumber(value)
-  // if (value.length === 19) {
-  //   return true;
-  // } else {
-  //   return false;
-  // }
 }
 export function checkCardNumber(value:string):boolean{
   if (value.split(' ').join('').length === 16) {
