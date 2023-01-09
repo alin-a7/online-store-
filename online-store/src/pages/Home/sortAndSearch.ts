@@ -292,15 +292,6 @@ export const checkboxFilter = () => {
 };
 
 export function hideCards(): void {
-  // hidddenId = [
-  //   ...new Set([
-  //     ...hidCategoryId,
-  //     ...hidSearchId,
-  //     ...hidBrandId,
-  //     ...hidPricedId,
-  //     ...hidStockdId,
-  //   ]),
-  // ];
   hidddenId = getUniqArr(
     hidCategoryId,
     hidSearchId,
