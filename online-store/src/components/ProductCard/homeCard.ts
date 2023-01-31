@@ -12,7 +12,7 @@ export const homeCard: (product: Iproduct) => string = (product) => {
         class="home-card__img"
         src="${product.images[0]}
       "
-      onError="this.onerror=null;this.src='../assets/noImg.jpg';"
+        onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
         alt="${product.category} - ${product.title}"
       />
       <div class="info">
@@ -39,6 +39,7 @@ export const homeCardMini: (product: Iproduct) => string = (product) => {
   <div class="home-card card-mini" id="${product.id}">
   <img
     src="${product.images[0]}"
+    onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
     alt="${product.category} - ${product.title}"
     class="card-mini__img"
   />

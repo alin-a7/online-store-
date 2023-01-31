@@ -9,6 +9,7 @@ const optionImg: (img: string, title: string) => string = (img, title) => {
   return `
     <img
         src="${img}"
+        onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
         alt="${title}"
         class="option-img"
       />
@@ -37,6 +38,7 @@ export const detailsCard = () => {
       class="personal-card__img"
       src="${currentProduct.images[0]}
       "
+      onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
       alt="${currentProduct.category} - ${currentProduct.title}"
     />
     <div class="personal-info">

@@ -13,6 +13,7 @@ export const cartCard: (product: Iproduct, index:number) => string = (product, i
       class="cart-card__img"
       src="${product.images[0]}
       "
+      onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
       alt="${product.category} - ${product.title}"
     />
     <div class="cart-info">
