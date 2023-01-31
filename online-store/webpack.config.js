@@ -33,9 +33,7 @@ const getPages = (dir, n) => {
         name: `p${n += i}`,
         dir: getRelative(dir),
         html: makePath(getRelative(path.join(dir, f))),
-        //eslint-disable-next-line
         script: dirContent.find(f => new RegExp(`^${name}\.[tj]s$`, 'i').test(f)),
-        //eslint-disable-next-line
         style: dirContent.find(f => new RegExp(`^${name}\.s(c|a)ss$`, 'i').test(f)),
       });
       return res;

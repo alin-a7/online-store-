@@ -624,6 +624,12 @@ input[type="range"]::-webkit-slider-thumb {
   color: rgb(215, 24, 24);
   font-size: 25px;
 }
+.input-wrapper .error, .credit-card-wrapper .error{
+  border: 3px solid rgb(215, 24, 24);
+}
+.input-wrapper .error{
+width: 50%;
+}
 
 /* NOTFOUND */
 

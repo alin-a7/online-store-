@@ -13,7 +13,7 @@ export const cartCard: (product: Iproduct, index:number) => string = (product, i
       class="cart-card__img"
       src="${product.images[0]}
       "
-      alt=""
+      alt="${product.category} - ${product.title}"
     />
     <div class="cart-info">
       <div class="personal-info__item">

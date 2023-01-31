@@ -4,6 +4,7 @@ import { getCartTotalAndItemHome, clickCart } from "../../components/cartArr/car
 import { searh, sorting, switchingView, sortedResponse, hideCards, checkboxFilter, rangePriceFilter, rangeStockFilter, resetFilters, copyLink } from "./sortAndSearch";
 import { filterCard } from "./filterCard";
 import { rangeFilterCard } from "./rangeFilterCard";
+import { Filter } from "../../components/model/const";
 
 
 let response: Iproduct[];
@@ -17,8 +18,7 @@ export const getProducts = async () => {
 
 export default {
   render: async () => {
-    response = (await getProducts()).map(el => new Iproduct(el.id, el.title, el.description, el.price,
-      el.discountPercentage, el.rating, el.stock, el.brand, el.category, el.images, el.thumbnail));
+    response = await getProducts();
 
     return `
       <div class="home-content">
@@ -27,10 +27,10 @@ export default {
             <button class="filter-btn reset">Reset filters</button>
             <button class="filter-btn copy">Copy link</button>
           </div>  
-        ${filterCard("category")}
-        ${filterCard("brand")}
-        ${rangeFilterCard('price')}
-        ${rangeFilterCard('stock')}
+        ${filterCard(Filter.category)}
+        ${filterCard(Filter.brand)}
+        ${rangeFilterCard(Filter.price)}
+        ${rangeFilterCard(Filter.stock)}
        </div>
        <div class="sort-card-wrapper">
          <div class="sort-wrapper">
