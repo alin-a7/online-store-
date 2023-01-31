@@ -28,6 +28,8 @@ let maxPriceValue: number;
 let minStockValue: number;
 let maxStockValue: number;
 let params: URLSearchParams = new URLSearchParams(window.location.search);
+const PRICE_GAP: number = 300
+const STOCK_GAP: number = 20
 
 export const searh: () => void = () => {
   arrCards = document.querySelectorAll(".home-card");
@@ -344,12 +346,6 @@ function restoringCheckboxes(): void {
 export const rangePriceFilter: () => void = () => {
   const rangePriceInput: NodeListOf<Element> =
     document.querySelectorAll(".price-range input");
-  const rangePriceMinInput = document.querySelector(
-    ".price-min"
-  ) as HTMLInputElement;
-  const rangePriceMaxInput = document.querySelector(
-    ".price-max"
-  ) as HTMLInputElement;
   const minValue = document.querySelector(".price-min-value") as HTMLElement;
   const maxValue = document.querySelector(".price-max-value") as HTMLElement;
 
@@ -363,12 +359,20 @@ export const rangePriceFilter: () => void = () => {
   filterByPrice();
 
   rangePriceInput.forEach((input) => {
-    input.addEventListener("change", () => {
+    input.addEventListener("input", (e) => {
       hidPricedId = [];
-      minPriceValue = parseInt(rangePriceMinInput.value);
-      maxPriceValue = parseInt(rangePriceMaxInput.value);
-      minPriceValue = Math.min(minPriceValue, maxPriceValue);
-      maxPriceValue = Math.max(minPriceValue, maxPriceValue);
+      minPriceValue = parseInt((rangePriceInput[0] as HTMLInputElement).value);
+      maxPriceValue = parseInt((rangePriceInput[1] as HTMLInputElement).value);
+
+      if(maxPriceValue - minPriceValue < PRICE_GAP){
+        if((e.target as HTMLInputElement).className === 'price-min'){
+          minPriceValue = maxPriceValue - PRICE_GAP;
+          (rangePriceInput[0] as HTMLInputElement).value = `${minPriceValue}`
+        } else {
+          maxPriceValue = minPriceValue + PRICE_GAP;
+          (rangePriceInput[1] as HTMLInputElement).value = `${maxPriceValue}`
+        }
+      }
 
       params.set("minprice", `${minPriceValue}`);
       params.set("maxprice", `${maxPriceValue}`);
@@ -409,12 +413,6 @@ export const rangePriceFilter: () => void = () => {
 export const rangeStockFilter: () => void = () => {
   const rangeStockInput: NodeListOf<Element> =
     document.querySelectorAll(".stock-range input");
-  const rangeStockMinInput = document.querySelector(
-    ".stock-min"
-  ) as HTMLInputElement;
-  const rangeStockMaxInput = document.querySelector(
-    ".stock-max"
-  ) as HTMLInputElement;
   const minValue = document.querySelector(".stock-min-value") as HTMLElement;
   const maxValue = document.querySelector(".stock-max-value") as HTMLElement;
 
@@ -427,12 +425,20 @@ export const rangeStockFilter: () => void = () => {
   filterByStock();
 
   rangeStockInput.forEach((input) => {
-    input.addEventListener("change", () => {
+    input.addEventListener("input", (e) => {
       hidStockdId = [];
-      minStockValue = parseInt(rangeStockMinInput.value);
-      maxStockValue = parseInt(rangeStockMaxInput.value);
-      minStockValue = Math.min(minStockValue, maxStockValue);
-      maxStockValue = Math.max(minStockValue, maxStockValue);
+      minStockValue = parseInt((rangeStockInput[0] as HTMLInputElement).value);
+      maxStockValue = parseInt((rangeStockInput[1] as HTMLInputElement).value);
+
+      if(maxStockValue - minStockValue < STOCK_GAP){
+        if((e.target as HTMLInputElement).className === 'stock-min'){
+          minStockValue = maxStockValue - STOCK_GAP;
+          (rangeStockInput[0] as HTMLInputElement).value = `${minStockValue}`
+        } else {
+          maxStockValue = minStockValue + STOCK_GAP;
+          (rangeStockInput[1] as HTMLInputElement).value = `${maxStockValue}`
+        }
+      }
 
       params.set("minstock", `${minStockValue}`);
       params.set("maxstock", `${maxStockValue}`);
