@@ -1,7 +1,6 @@
 export const footer = () => {
   return `
-        <footer>
-        <div class="footer">
+        <footer class="footer">
         <div class="footer-container">
         <div class="footer-block">
           <div class="footer-nav">© 2022</div>
@@ -16,8 +15,6 @@ export const footer = () => {
           <a href="https://github.com/JaLongin" class="footer-nav atr">JaLongin</a>
         </div>
         </div>
-        
-      </div>
         </footer>
     `
 }

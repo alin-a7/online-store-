@@ -51,14 +51,12 @@ export function validation() {
 }
 
 function getError(input: HTMLInputElement, err: HTMLElement): void {
-  input.style.border = "3px solid rgb(215, 24, 24)";
-  input.style.width = "50%";
-  err.style.display = "block";
+  input.classList.add('error');
+  err.classList.remove('hidden');
 }
 function getNotError(input: HTMLInputElement, err: HTMLElement): void {
-  input.style.border = "1px solid white";
-  input.style.width = "97%";
-  err.style.display = "none";
+  input.classList.remove('error');
+  err.classList.add('hidden');
 }
 
 function validationNameAndAdress(
@@ -156,12 +154,12 @@ function enteringOnlyNumbers(): void {
 }
 
 function getCardError(input: HTMLInputElement, err: HTMLElement): void {
-  input.style.border = "3px solid rgb(215, 24, 24)";
-  err.style.display = "block";
+  input.classList.add('error');
+  err.classList.remove('hidden');
 }
 function getCardNotError(input: HTMLInputElement, err: HTMLElement): void {
-  input.style.border = "1px solid white";
-  err.style.display = "none";
+  input.classList.remove('error');
+  err.classList.add('hidden');
 }
 
 function validationCardValid(): boolean {

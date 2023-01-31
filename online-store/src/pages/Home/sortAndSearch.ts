@@ -8,6 +8,7 @@ import {
   getQuantityItem,
   getFilterItems,
 } from "./filterCard";
+import { Filter, Sorting } from "../../components/model/const";
 
 let arrCards: NodeListOf<Element>;
 let hidddenId: number[] = [];
@@ -109,13 +110,13 @@ export const sorting: () => void = () => {
     makeSorting();
   };
   function makeSorting(): void {
-    if (selectValue === "price ASC")
+    if (selectValue === Sorting.price_ASC)
       sortedResponse = sortedResponse.sort((a, b) => a.price - b.price);
-    if (selectValue === "price DESC")
+    if (selectValue === Sorting.price_DESC)
       sortedResponse = sortedResponse.sort((a, b) => b.price - a.price);
-    if (selectValue === "rating ASC")
+    if (selectValue === Sorting.rating_ASC)
       sortedResponse = sortedResponse.sort((a, b) => a.rating - b.rating);
-    if (selectValue === "rating DESC")
+    if (selectValue === Sorting.rating_DESC)
       sortedResponse = sortedResponse.sort((a, b) => b.rating - a.rating);
 
     renderSortCards();
@@ -312,10 +313,10 @@ export function hideCards(): void {
 
   getNotFoundPoduct();
 
-  changesQuantityItem("category");
-  changesQuantityItem("brand");
-  changesRangeItem("price");
-  changesRangeItem("stock");
+  changesQuantityItem(Filter.category);
+  changesQuantityItem(Filter.brand);
+  changesRangeItem(Filter.price);
+  changesRangeItem(Filter.stock);
 }
 export function getUniqArr(
   arr1: number[],
@@ -551,10 +552,10 @@ function changesRangeItem(str: string): void {
   rangeMinInput.value = min;
   rangeMaxInput.value = max;
   minValue.innerHTML = `${min}${
-    str === "price" && hidddenId.length < 100 ? "$" : ""
+    str === Filter.price && hidddenId.length < 100 ? "$" : ""
   }`;
   maxValue.innerHTML = `${max}${
-    str === "price" && hidddenId.length < 100 ? "$" : ""
+    str === Filter.price && hidddenId.length < 100 ? "$" : ""
   }`;
 }
 

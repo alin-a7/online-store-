@@ -1,5 +1,8 @@
 import { Iproduct } from "../model/model";
 import { cartArr } from "../cartArr/cartArr";
+
+
+
 export const homeCard: (product: Iproduct) => string = (product) => {
   return `
     <div class="home-card home-card-style" id="${product.id}">
@@ -9,7 +12,8 @@ export const homeCard: (product: Iproduct) => string = (product) => {
         class="home-card__img"
         src="${product.images[0]}
       "
-        alt=""
+      onError="this.onerror=null;this.src='../assets/noImg.jpg';"
+        alt="${product.category} - ${product.title}"
       />
       <div class="info">
         <p class="info__item">Category: ${product.category}</p>
@@ -35,7 +39,7 @@ export const homeCardMini: (product: Iproduct) => string = (product) => {
   <div class="home-card card-mini" id="${product.id}">
   <img
     src="${product.images[0]}"
-    alt=""
+    alt="${product.category} - ${product.title}"
     class="card-mini__img"
   />
   <div class="card-mini__content">

@@ -5,20 +5,21 @@ import { getButtonText } from "../homeCard";
 
 let currentId: number;
 
-const optionImg: (img: string) => string = (img) => {
+const optionImg: (img: string, title: string) => string = (img, title) => {
   return `
     <img
         src="${img}"
-        alt=""
+        alt="${title}"
         class="option-img"
       />
 `;
 };
 
 const getOptionImages: (product: Iproduct) => string = (product) => {
+  const {title} = product
   let htmlList = ``;
   product.images.map((img: string) => {
-    htmlList += optionImg(img);
+    htmlList += optionImg(img, title);
   });
   return htmlList;
 };
@@ -36,7 +37,7 @@ export const detailsCard = () => {
       class="personal-card__img"
       src="${currentProduct.images[0]}
       "
-      alt=""
+      alt="${currentProduct.category} - ${currentProduct.title}"
     />
     <div class="personal-info">
       <div class="personal-info__item">

@@ -1,4 +1,18 @@
 import { Iproduct } from "./model"
+
+export enum Filter {
+    category = 'category',
+    brand = 'brand',
+    price = 'price',
+    stock = 'stock'
+}
+export enum Sorting {
+    price_ASC = 'price ASC',
+    price_DESC = 'price DESC',
+    rating_ASC = 'rating ASC',
+    rating_DESC = 'rating DESC'
+}
+
 export const products: Array<Iproduct> =
 [
     {
