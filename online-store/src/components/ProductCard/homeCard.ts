@@ -8,13 +8,15 @@ export const homeCard: (product: Iproduct) => string = (product) => {
     <div class="home-card home-card-style" id="${product.id}">
     <div class="home-card__title">${product.title}</div>
     <div class="info-wrapper">
-      <img
-        class="home-card__img"
-        src="${product.images[0]}
-      "
-        onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
-        alt="${product.category} - ${product.title}"
-      />
+    <div class="home-card__img-wrapper">
+    <img
+    class="home-card__img"
+    src="${product.images[0]}
+  "
+    onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
+    alt="${product.category} - ${product.title}"
+  />
+    </div>
       <div class="info">
         <p class="info__item">Category: ${product.category}</p>
         <p class="info__item">Brand: ${product.brand}</p>
@@ -37,12 +39,14 @@ export const homeCard: (product: Iproduct) => string = (product) => {
 export const homeCardMini: (product: Iproduct) => string = (product) => {
   return `
   <div class="home-card card-mini" id="${product.id}">
+  <div class="card-mini__img-wrapper">
   <img
-    src="${product.images[0]}"
-    onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
-    alt="${product.category} - ${product.title}"
-    class="card-mini__img"
-  />
+  src="${product.images[0]}"
+  onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
+  alt="${product.category} - ${product.title}"
+  class="card-mini__img"
+/>
+  </div>
   <div class="card-mini__content">
     <div class="card-mini__title">${product.title}</div>
     <div class="mini-button-wrapper">
