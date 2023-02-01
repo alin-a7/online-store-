@@ -34,13 +34,15 @@ export const detailsCard = () => {
     <div class="img-wrapper">
       ${getOptionImages(currentProduct)}
     </div>
+    <div class="personal-card__img-wrapper">
     <img
-      class="personal-card__img"
-      src="${currentProduct.images[0]}
-      "
-      onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
-      alt="${currentProduct.category} - ${currentProduct.title}"
-    />
+    class="personal-card__img"
+    src="${currentProduct.images[0]}
+    "
+    onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
+    alt="${currentProduct.category} - ${currentProduct.title}"
+  />
+    </div>
     <div class="personal-info">
       <div class="personal-info__item">
         <div class="personal-info__title">Description</div>

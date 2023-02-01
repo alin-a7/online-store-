@@ -9,13 +9,15 @@ export const cartCard: (product: Iproduct, index:number) => string = (product, i
 
     <div class="cart-info-wrapper">
     <span class="current-item">${index+1}</span>
+    <div class="cart-card__img-wrapper">
     <img
-      class="cart-card__img"
-      src="${product.images[0]}
-      "
-      onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
-      alt="${product.category} - ${product.title}"
-    />
+    class="cart-card__img"
+    src="${product.images[0]}
+    "
+    onerror="this.onerror=null; this.src='components/assets/noImg.jpg';"
+    alt="${product.category} - ${product.title}"
+  />
+    </div>
     <div class="cart-info">
       <div class="personal-info__item">
         <div class="personal-info__title">Description</div>
