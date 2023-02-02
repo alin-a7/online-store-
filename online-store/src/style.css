@@ -394,7 +394,7 @@ input[type="range"]::-webkit-slider-thumb {
   gap: 20px;
   align-items: center;
   justify-content: center;
-  margin-top: 7%;
+  margin-top: 100px;
   min-height: calc(100vh - 188px);
 }
 
